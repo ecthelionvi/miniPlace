@@ -3,7 +3,6 @@ const yesButton = document.getElementById('yes-button');
 const noButton = document.getElementById('no-button');
 const resultContainer = document.getElementById('result-container');
 const loadingSpinner = document.getElementById('loading-spinner');
-require('dotenv').config();
 
 let questions = [];
 let answers = [];
@@ -14,7 +13,7 @@ async function sendRequest(prompt) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.API_KEY}`
+      'Authorization': `Bearer ${API_KEY}`
     },
     body: JSON.stringify({
       prompt: prompt,
