@@ -14,6 +14,12 @@ h1 {
   margin-bottom: 20px;
 }
 
+#start-button {
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
 #question-container {
   margin-top: 20px;
 }

@@ -1,35 +1,53 @@
 const questionContainer = document.getElementById('question-container');
+const answerButtons = document.getElementById('answer-buttons');
 const yesButton = document.getElementById('yes-button');
 const noButton = document.getElementById('no-button');
 const resultContainer = document.getElementById('result-container');
 const loadingSpinner = document.getElementById('loading-spinner');
+const startButton = document.getElementById('start-button');
 
 let questions = [];
 let answers = [];
 
 // Function to send a request to the ChatGPT API
 async function sendRequest(prompt) {
-  const response = await fetch('https://api.openai.com/v1/engines/davinci-codex/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${API_KEY}`
-    },
-    body: JSON.stringify({
-      prompt: prompt,
-      max_tokens: 50,
-      n: 1,
-      stop: null,
-      temperature: 0.7
-    })
-  });
+  try {
+    const response = await fetch('https://api.openai.com/v1/engines/davinci-codex/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${API_KEY}`
+      },
+      body: JSON.stringify({
+        prompt: prompt,
+        max_tokens: 50,
+        n: 1,
+        stop: null,
+        temperature: 0.7
+      })
+    });
 
-  const data = await response.json();
-  return data.choices[0].text.trim();
+    const data = await response.json();
+
+    if (data.choices && data.choices.length > 0) {
+      return data.choices[0].text.trim();
+    } else {
+      console.error('Unexpected API response:', data);
+      throw new Error('Unable to retrieve response from the API.');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
 }
 
 // Function to start a new game
 async function startNewGame() {
+  startButton.style.display = 'none';
+  answerButtons.style.display = 'block';
+  questionContainer.style.display = 'block';
+  resultContainer.textContent = '';
+
   questions = [];
   answers = [];
 
@@ -66,6 +84,10 @@ async function handleAnswer(answer) {
     loadingSpinner.classList.add('hidden');
 
     resultContainer.textContent = `I guess the object is: ${guess}`;
+
+    startButton.style.display = 'block';
+    answerButtons.style.display = 'none';
+    questionContainer.style.display = 'none';
   }
 }
 
@@ -73,5 +95,5 @@ async function handleAnswer(answer) {
 yesButton.addEventListener('click', () => handleAnswer('Yes'));
 noButton.addEventListener('click', () => handleAnswer('No'));
 
-// Start a new game when the page loads
-startNewGame();
+// Event listener for start button
+startButton.addEventListener('click', startNewGame);
