@@ -2,16 +2,11 @@
 🎨 miniPlace 
 </h1>
 <p align="center">
-  <img src="URL_TO_MINIPLACE_LOGO" alt="miniPlace Logo" style="width: 60%; height: auto;">
+  <img src="https://raw.githubusercontent.com/ecthelionvi/Images/main/miniPlace.png" alt="miniPlace Logo" style="width: 60%; height: auto;">
 </p>
 
 ## 📋 Project Overview
 miniPlace is an engaging web-based pixel art canvas that allows users to unleash their creativity by painting on a customizable grid with a palette of colors. It's designed to offer a simple yet powerful interface for creating digital art, teaching basic color theory, and providing a relaxing hobby activity. This project leverages modern front-end technologies to deliver a seamless user experience.
-
-## 💻 Infrastructure
-<p align="center">
-  <img src="URL_TO_MINIPLACE_INFRASTRUCTURE_IMAGE" alt="miniPlace Infrastructure">
-</p>
 
 ### 🛠️ Core Components
 - **Frontend:** Vanilla JavaScript, HTML5, and CSS3 for a responsive and interactive user interface 🌐.
