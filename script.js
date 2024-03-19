@@ -1,9 +1,14 @@
 document.addEventListener('DOMContentLoaded', function() {
   let currentColor = '#000000';
   const grid = document.getElementById('grid');
+  const saveButton = document.getElementById('saveGrid');
+  const footerImage = document.getElementById('footerText');
   const colorBlocks = document.querySelectorAll('.colorBlock');
   const resetGridButton = document.getElementById('resetGrid');
-  const saveButton = document.getElementById('saveGrid');
+
+  footerImage.addEventListener('click', function() {
+    window.open('https://github.com/ecthelionvi/miniPlace', '_blank');
+  });
 
   colorBlocks.forEach(block => {
     block.addEventListener('click', function() {

@@ -44,7 +44,7 @@ nav {
   filter: drop-shadow(5px 5px 5px #222);
 }
 
-#resetGrid:hover, #saveGrid:hover {
+#resetGrid:hover, #saveGrid:hover, #footerText:hover {
   opacity: 1;
   filter: drop-shadow(5px 5px 5px #222) brightness(0.9) sepia(2) hue-rotate(0deg) saturate(5);
 }
