@@ -1,0 +1,351 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --grid-size: 20px;
+  --grid-columns: 30;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    rgba(106, 27, 154, 0.8),
+    rgba(49, 27, 146, 0.8),
+    rgba(26, 35, 126, 0.8)
+  );
+}
+
+header {
+  width: 100%;
+  align-self: stretch;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 35, 126, 0.8),
+    rgba(49, 27, 146, 0.8),
+    rgba(106, 27, 154, 0.8)
+  );
+  padding: 10px 0;
+  margin-bottom: -8px;
+}
+
+nav {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#colorPicker {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border: 2px solid #000;
+}
+
+#colorPicker:hover {
+  border-color: #000;
+}
+
+#colorPicker.selected {
+  transform: scale(0.9);
+  border: 2px solid #000;
+  box-shadow:
+    inset 0 4px 4px rgba(0, 0, 0, 0.2),
+    0 0 0 4px #ffd700;
+}
+
+#colorPicker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+#colorPicker::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+#twitterButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 64px;
+  height: auto;
+  cursor: pointer;
+  z-index: 10;
+}
+
+#redditButton {
+  position: fixed;
+  bottom: 20px;
+  right: 100px;
+  width: 64px;
+  height: auto;
+  cursor: pointer;
+  z-index: 10;
+}
+
+#loadGrid {
+  width: 76px;
+  height: auto;
+  cursor: pointer;
+}
+
+#saveGrid {
+  width: 80px;
+  height: auto;
+}
+
+#resetGrid {
+  width: 72px;
+  height: auto;
+  margin-bottom: 1px;
+}
+
+#downloadGrid {
+  width: 73px;
+  height: auto;
+  margin-left: -1px;
+  margin-bottom: 2px;
+}
+
+#homeGrid {
+  width: 73px;
+  height: auto;
+  margin-left: -1px;
+  margin-bottom: 2px;
+}
+
+#galleryGrid {
+  width: 73px;
+  height: auto;
+}
+
+#accountGrid {
+  width: 80px;
+  height: auto;
+  margin-left: -5px;
+}
+
+#eraserGrid {
+  width: 72px;
+  height: auto;
+  margin-left: -5px;
+}
+
+#undoGrid,
+#redoGrid {
+  width: 75px;
+  height: auto;
+}
+
+#saveGrid,
+#homeGrid,
+#undoGrid,
+#redoGrid,
+#redditButton,
+#twitterButton {
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  margin: -2px 5px;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+}
+
+#downloadGrid,
+#loadGrid,
+#accountGrid,
+#resetGrid,
+#galleryGrid,
+#eraserGrid {
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+}
+
+#resetGrid:hover,
+#saveGrid:hover,
+#footerText:hover,
+#loadGrid:hover,
+#downloadGrid:hover,
+#homeGrid:hover,
+#galleryGrid:hover,
+#accountGrid:hover,
+#undoGrid:hover,
+#redoGrid:hover,
+#redditButton:hover,
+#twitterButton:hover,
+#eraserGrid:hover {
+  opacity: 1;
+  filter: drop-shadow(5px 5px 5px #222) brightness(0.9) sepia(2) hue-rotate(0deg) saturate(5);
+}
+
+#navbarLogo {
+  margin: 0 10px;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+#gridWrapper {
+  background-color: #fff;
+  border: 5px solid black;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+#grid {
+  cursor: crosshair;
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), var(--grid-size));
+  grid-gap: 1px;
+  box-sizing: border-box;
+}
+
+#grid div {
+  width: var(--grid-size);
+  height: var(--grid-size);
+  border: 1px solid #eee;
+  box-sizing: border-box;
+}
+
+#colorPalette {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+#clickText {
+  margin: 15px 0;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+}
+
+#footerText {
+  cursor: pointer;
+  margin: 18px 0;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+}
+
+.colorBlock {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border: 2px solid #000;
+}
+
+.colorBlock:hover {
+  border-color: #000;
+}
+
+.colorBlock.selected {
+  transform: scale(0.9);
+  border: 2px solid #000;
+  box-shadow:
+    inset 0 4px 4px rgba(0, 0, 0, 0.2),
+    0 0 0 4px #ffd700;
+}
+
+@media (max-width: 915px) {
+  :root {
+    --grid-size: 18px;
+  }
+
+  #navbarLogo {
+    width: 60vw;
+  }
+
+  #resetGrid,
+  #saveGrid {
+    width: 12vw;
+  }
+
+  #clickText,
+  #footerText {
+    width: 50vw;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --grid-size: 12px;
+  }
+
+  #navbarLogo {
+    width: 60vw;
+  }
+}
+
+@media (max-width: 375px) {
+  :root {
+    --grid-size: 10px;
+  }
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext-load {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-bottom: -0.5px;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext,
+.tooltip:hover .tooltiptext-load {
+  visibility: visible;
+  opacity: 1;
+}
