@@ -1,16 +1,74 @@
 import React, { useState, useEffect, useRef } from "react";
 import html2canvas from "html2canvas";
 import "../styles/Home.css";
+import logo from "../images/logo.png";
+import home from "../images/home.png";
+import gallery from "../images/gallery.png";
+import clear from "../images/clear.png";
+import eraser from "../images/eraser.png";
+import undoGrid from "../images/undo.png";
+import redoGrid from "../images/redo.png";
+import hardDrive from "../images/hard-drive.png";
+import floppyDisk from "../images/floppy-disk.png";
+import download from "../images/download.png";
+import signIn from "../images/sign-in.png";
+import footer from "../images/footer.png";
+import twitter from "../images/twitter.png";
+import reddit from "../images/reddit.png";
 
 const MiniPlace = () => {
   const [currentColor, setCurrentColor] = useState("#000000");
+  const [previousColorPickerValue, setPreviousColorPickerValue] = useState("#000000");
   const [undoStack, setUndoStack] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
   const gridRef = useRef(null);
+  const colorPickerRef = useRef(null);
+  const colorBlockRefs = useRef([]);
 
   useEffect(() => {
     createGrid(30);
-  }, []);
+
+    const colorPicker = colorPickerRef.current;
+    const colorBlocks = colorBlockRefs.current;
+
+    const handleColorPickerInput = () => {
+      if (colorPicker.value !== previousColorPickerValue) {
+        colorBlocks.forEach((block) => block.classList.remove("selected"));
+        colorPicker.classList.add("selected");
+        setCurrentColor(colorPicker.value);
+        setPreviousColorPickerValue(colorPicker.value);
+      }
+    };
+
+    const handleColorPickerClick = () => {
+      colorBlocks.forEach((block) => block.classList.remove("selected"));
+      colorPicker.classList.add("selected");
+      setCurrentColor(colorPicker.value);
+    };
+
+    const handleColorBlockClick = (index) => {
+      colorBlocks.forEach((block) => block.classList.remove("selected"));
+      colorPicker.classList.remove("selected");
+      colorBlocks[index].classList.add("selected");
+      setCurrentColor(colorBlocks[index].style.backgroundColor);
+    };
+
+    colorPicker.addEventListener("input", handleColorPickerInput);
+    colorPicker.addEventListener("click", handleColorPickerClick);
+
+    colorBlocks.forEach((block, index) => {
+      block.addEventListener("click", () => handleColorBlockClick(index));
+    });
+
+    return () => {
+      colorPicker.removeEventListener("input", handleColorPickerInput);
+      colorPicker.removeEventListener("click", handleColorPickerClick);
+
+      colorBlocks.forEach((block, index) => {
+        block.removeEventListener("click", () => handleColorBlockClick(index));
+      });
+    };
+  }, [previousColorPickerValue]);
 
   const createGrid = (size) => {
     const grid = gridRef.current;
@@ -155,27 +213,22 @@ const MiniPlace = () => {
     <div>
       <header>
         <nav id="menuBar">
-          <img src="./images/logo.png" alt="Logo" id="navbarLogo" />
+          <img src={logo} alt="Logo" id="navbarLogo" />
           <div className="tooltip">
-            <img src="./images/home.png" alt="Home" id="homeGrid" />
+            <img src={home} alt="Home" id="homeGrid" />
             <span className="tooltiptext">Home</span>
           </div>
           <div className="tooltip">
-            <img src="./images/gallery.png" alt="Gallery" id="galleryGrid" />
+            <img src={gallery} alt="Gallery" id="galleryGrid" />
             <span className="tooltiptext">Gallery</span>
           </div>
           <div className="tooltip">
-            <img
-              src="./images/clear.png"
-              alt="Reset"
-              id="resetGrid"
-              onClick={() => createGrid(30)}
-            />
+            <img src={clear} alt="Reset" id="resetGrid" onClick={() => createGrid(30)} />
             <span className="tooltiptext">Trash</span>
           </div>
           <div className="tooltip">
             <img
-              src="./images/eraser.png"
+              src={eraser}
               alt="Eraser"
               id="eraserGrid"
               onClick={() => setCurrentColor("#ffffff")}
@@ -183,32 +236,27 @@ const MiniPlace = () => {
             <span className="tooltiptext">Eraser</span>
           </div>
           <div className="tooltip">
-            <img src="./images/undo.png" alt="Reset" id="undoGrid" onClick={undo} />
+            <img src={undoGrid} alt="Undo" id="undoGrid" onClick={undo} />
             <span className="tooltiptext">Undo</span>
           </div>
           <div className="tooltip">
-            <img src="./images/redo.png" alt="Reset" id="redoGrid" onClick={redo} />
+            <img src={redoGrid} alt="Redo" id="redoGrid" onClick={redo} />
             <span className="tooltiptext">Redo</span>
           </div>
           <div className="tooltip">
-            <img src="./images/hard-drive.png" alt="Save" id="saveGrid" onClick={saveGridState} />
+            <img src={hardDrive} alt="Save" id="saveGrid" onClick={saveGridState} />
             <span className="tooltiptext">Save</span>
           </div>
           <div className="tooltip">
-            <img src="./images/floppy-disk.png" alt="Save" id="loadGrid" onClick={loadGridState} />
+            <img src={floppyDisk} alt="Save" id="loadGrid" onClick={loadGridState} />
             <span className="tooltiptext-load">Load</span>
           </div>
           <div className="tooltip">
-            <img
-              src="./images/download.png"
-              alt="Download"
-              id="downloadGrid"
-              onClick={downloadImage}
-            />
+            <img src={download} alt="Download" id="downloadGrid" onClick={downloadImage} />
             <span className="tooltiptext-load">Download</span>
           </div>
           <div className="tooltip">
-            <img src="./images/sign-in.png" alt="Account" id="accountGrid" />
+            <img src={signIn} alt="Account" id="accountGrid" />
             <span className="tooltiptext-load">Sign In</span>
           </div>
         </nav>
@@ -218,24 +266,53 @@ const MiniPlace = () => {
           <div id="grid" ref={gridRef}></div>
         </div>
         <div id="colorPalette">
-          <div className="colorBlock" style={{ backgroundColor: "#ff0000" }}></div>
-          <div className="colorBlock" style={{ backgroundColor: "#ffa500" }}></div>
-          <div className="colorBlock" style={{ backgroundColor: "#ffff00" }}></div>
-          <div className="colorBlock" style={{ backgroundColor: "#008000" }}></div>
-          <div className="colorBlock" style={{ backgroundColor: "#0000ff" }}></div>
-          <div className="colorBlock" style={{ backgroundColor: "#4b0082" }}></div>
-          <div className="colorBlock selected" style={{ backgroundColor: "#000000" }}></div>
+          <div
+            className="colorBlock"
+            style={{ backgroundColor: "#ff0000" }}
+            ref={(el) => (colorBlockRefs.current[0] = el)}
+          ></div>
+          <div
+            className="colorBlock"
+            style={{ backgroundColor: "#ffa500" }}
+            ref={(el) => (colorBlockRefs.current[1] = el)}
+          ></div>
+          <div
+            className="colorBlock"
+            style={{ backgroundColor: "#ffff00" }}
+            ref={(el) => (colorBlockRefs.current[2] = el)}
+          ></div>
+          <div
+            className="colorBlock"
+            style={{ backgroundColor: "#008000" }}
+            ref={(el) => (colorBlockRefs.current[3] = el)}
+          ></div>
+          <div
+            className="colorBlock"
+            style={{ backgroundColor: "#0000ff" }}
+            ref={(el) => (colorBlockRefs.current[4] = el)}
+          ></div>
+          <div
+            className="colorBlock"
+            style={{ backgroundColor: "#4b0082" }}
+            ref={(el) => (colorBlockRefs.current[5] = el)}
+          ></div>
+          <div
+            className="colorBlock selected"
+            style={{ backgroundColor: "#000000" }}
+            ref={(el) => (colorBlockRefs.current[6] = el)}
+          ></div>
           <input
             type="color"
             id="colorPicker"
+            ref={colorPickerRef}
             value={currentColor}
             onChange={(e) => setCurrentColor(e.target.value)}
           />
         </div>
-        <img src="./images/footer.png" alt="Text" id="footerText" />
+        <img src={footer} alt="Text" id="footerText" />
       </main>
-      <img src="./images/twitter.png" alt="twitter" id="twitterButton" onClick={shareOnTwitter} />
-      <img src="./images/reddit.png" alt="reddit" id="redditButton" onClick={shareOnReddit} />
+      <img src={twitter} alt="twitter" id="twitterButton" onClick={shareOnTwitter} />
+      <img src={reddit} alt="reddit" id="redditButton" onClick={shareOnReddit} />
     </div>
   );
 };
