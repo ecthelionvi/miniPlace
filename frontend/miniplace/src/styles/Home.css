@@ -94,10 +94,20 @@ nav {
   z-index: 10;
 }
 
+
+#multiplayerGrid {
+  width: 80px;
+  height: auto;
+  cursor: pointer;
+  /* margin-right: -8px; */
+  margin-bottom: -2px;
+}
+
 #loadGrid {
   width: 76px;
   height: auto;
   cursor: pointer;
+  /* margin-right: 1px; */
 }
 
 #saveGrid {
@@ -109,13 +119,14 @@ nav {
   width: 72px;
   height: auto;
   margin-bottom: 1px;
+  margin-right: 5px;
 }
 
 #downloadGrid {
   width: 73px;
   height: auto;
-  margin-left: -1px;
-  margin-bottom: 2px;
+  margin-left: -5px;
+  /* margin-bottom: 2px; */
 }
 
 #homeGrid {
@@ -123,11 +134,13 @@ nav {
   height: auto;
   margin-left: -1px;
   margin-bottom: 2px;
+  margin-right: 5px;
 }
 
 #galleryGrid {
   width: 73px;
   height: auto;
+  margin-right: 5px;
 }
 
 #accountGrid {
@@ -139,7 +152,8 @@ nav {
 #eraserGrid {
   width: 72px;
   height: auto;
-  margin-left: -5px;
+  margin-right: 5px;
+  /* margin-left: -2px; */
 }
 
 #undoGrid,
@@ -161,6 +175,7 @@ nav {
   filter: drop-shadow(5px 5px 5px #222);
 }
 
+#multiplayerGrid,
 #downloadGrid,
 #loadGrid,
 #accountGrid,
@@ -185,6 +200,7 @@ nav {
 #redoGrid:hover,
 #redditButton:hover,
 #twitterButton:hover,
+#multiplayerGrid:hover,
 #eraserGrid:hover {
   opacity: 1;
   filter: drop-shadow(5px 5px 5px #222) brightness(0.9) sepia(2) hue-rotate(0deg) saturate(5);
@@ -212,6 +228,7 @@ main {
   box-sizing: border-box;
   position: relative;
   z-index: 1;
+  margin-top: 40px;
 }
 
 #grid {

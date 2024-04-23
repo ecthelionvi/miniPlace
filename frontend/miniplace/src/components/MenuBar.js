@@ -10,6 +10,7 @@ import gallery from "../images/gallery.png";
 import download from "../images/download.png";
 import hardDrive from "../images/hard-drive.png";
 import floppyDisk from "../images/floppy-disk.png";
+import multiplayer from "../images/multiplayer.png";
 
 const Menubar = ({
   createGrid,
@@ -56,6 +57,10 @@ const Menubar = ({
         <div className="tooltip">
           <img src={floppyDisk} alt="Save" id="loadGrid" onClick={handleLoad} />
           <span className="tooltiptext-load">Load</span>
+        </div>
+        <div className="tooltip">
+          <img src={multiplayer} alt="Multiplayer" id="multiplayerGrid" onClick={handleDownload} />
+          <span className="tooltiptext-load">Multiplayer</span>
         </div>
         <div className="tooltip">
           <img src={download} alt="Download" id="downloadGrid" onClick={handleDownload} />
