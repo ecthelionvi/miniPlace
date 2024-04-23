@@ -5,6 +5,7 @@ import unDo from "../images/undo.png";
 import reDo from "../images/redo.png";
 import trash from "../images/clear.png";
 import eraser from "../images/eraser.png";
+import { NavLink } from "react-router-dom";
 import signIn from "../images/sign-in.png";
 import gallery from "../images/gallery.png";
 import download from "../images/download.png";
@@ -67,7 +68,9 @@ const Menubar = ({
           <span className="tooltiptext-load">Download</span>
         </div>
         <div className="tooltip">
-          <img src={signIn} alt="Account" id="accountGrid" />
+          <NavLink to="/login">
+            <img src={signIn} alt="Account" id="accountGrid" />
+          </NavLink>
           <span className="tooltiptext-load">Sign In</span>
         </div>
       </nav>
