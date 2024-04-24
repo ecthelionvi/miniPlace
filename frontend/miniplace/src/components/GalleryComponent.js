@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import Gallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import "../styles/GalleryComponent.css";
+import GalleryText from "../images/gallery-text.png";
 
 const GalleryComponent = () => {
   const [photos, setPhotos] = useState([]);
@@ -35,21 +36,24 @@ const GalleryComponent = () => {
   };
 
   return (
-    <div className="gallery-container">
-      <Gallery photos={photos} onClick={openLightbox} />
-      <ModalGateway>
-        {viewerIsOpen ? (
-          <Modal onClose={closeLightbox}>
-            <Carousel
-              currentIndex={currentImage}
-              views={photos.map((x) => ({
-                ...x,
-                srcset: x.srcSet,
-              }))}
-            />
-          </Modal>
-        ) : null}
-      </ModalGateway>
+    <div className="gallery-container-hero">
+      <img src={GalleryText} alt="GalleryText" className="gallery-text" />
+      <div className="gallery-container">
+        <Gallery photos={photos} onClick={openLightbox} />
+        <ModalGateway>
+          {viewerIsOpen ? (
+            <Modal onClose={closeLightbox}>
+              <Carousel
+                currentIndex={currentImage}
+                views={photos.map((x) => ({
+                  ...x,
+                  srcset: x.srcSet,
+                }))}
+              />
+            </Modal>
+          ) : null}
+        </ModalGateway>
+      </div>
     </div>
   );
 };

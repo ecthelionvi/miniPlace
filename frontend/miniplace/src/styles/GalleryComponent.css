@@ -1,3 +1,10 @@
+.gallery-container-hero {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .gallery-container {
   display: flex;
   flex-wrap: wrap;
@@ -6,12 +13,22 @@
   width: 100%;
   max-width: 80vw;
   max-height: 80vh;
-  margin-top: -32px;
+  /* margin-top: -32px; */
 }
 
 .gallery-container img {
-  width: 320px;
+  width: 210px;
   height: auto;
   margin: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-text {
+  margin-top: -236px;
+  margin-bottom: 42px;
+}
+
+.gallery-text-load {
+  margin-top: -256px;
+  margin-bottom: 42px;
 }

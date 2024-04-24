@@ -1,6 +1,7 @@
 import "../styles/GalleryComponent.css";
 import Gallery from "react-photo-gallery";
 import React, { useState, useEffect } from "react";
+import loadText from "../images/load.png";
 
 const LoadComponent = ({ userId, handleLoadGrid }) => {
   const [photos, setPhotos] = useState([]);
@@ -31,8 +32,11 @@ const LoadComponent = ({ userId, handleLoadGrid }) => {
   };
 
   return (
-    <div className="gallery-container">
-      <Gallery photos={photos} onClick={handleImageClick} />
+    <div className="gallery-container-hero">
+      <img src={loadText} alt="LoadText" className="gallery-text-load" />
+      <div className="gallery-container">
+        <Gallery photos={photos} onClick={handleImageClick} />
+      </div>
     </div>
   );
 };

@@ -38,8 +38,10 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   };
 
   const handleEraserClick = () => {
-    setCurrentColor("#ffffff");
-    setActiveTool("eraser");
+    if (showComponent === "grid") {
+      setCurrentColor("#ffffff");
+      setActiveTool("eraser");
+    }
   };
 
   const handleColorPickerChange = (e) => {
@@ -73,7 +75,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   };
 
   const handleUndo = () => {
-    if (undoStack.length > 0) {
+    if (showComponent === "grid" && undoStack.length > 0) {
       const lastAction = undoStack[undoStack.length - 1];
       const newGrid = [...grid];
       newGrid[lastAction.pixelIndex] = lastAction.color;
@@ -87,7 +89,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   };
 
   const handleRedo = () => {
-    if (redoStack.length > 0) {
+    if (showComponent === "grid" && redoStack.length > 0) {
       const lastUndo = redoStack[redoStack.length - 1];
       const newGrid = [...grid];
       newGrid[lastUndo.pixelIndex] = lastUndo.color;

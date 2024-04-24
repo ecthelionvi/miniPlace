@@ -73,20 +73,34 @@ app.post("/save-grid-design", upload.single("screenshot"), (req, res) => {
   const gridData = JSON.stringify(req.body.gridData);
   const screenshotBlob = req.file.buffer;
 
-  db.run(
-    `INSERT INTO grid_designs (user_id, screenshot, grid_data) VALUES (?, ?, ?)`,
-    [userId, screenshotBlob, gridData],
-    (err) => {
+  // Check if the grid data matches any existing grid designs for the user
+  db.get(
+    `SELECT * FROM grid_designs WHERE user_id = ? AND grid_data = ?`,
+    [userId, gridData],
+    (err, row) => {
       if (err) {
         console.error(err);
         res.status(500).json({ error: "Internal server error" });
+      } else if (row) {
+        res.status(400).json({ error: "Duplicate grid design" });
       } else {
-        res.status(200).json({ message: "Grid design saved successfully" });
+        // If no duplicate found, insert the new grid design
+        db.run(
+          `INSERT INTO grid_designs (user_id, screenshot, grid_data) VALUES (?, ?, ?)`,
+          [userId, screenshotBlob, gridData],
+          (err) => {
+            if (err) {
+              console.error(err);
+              res.status(500).json({ error: "Internal server error" });
+            } else {
+              res.status(200).json({ message: "Grid design saved successfully" });
+            }
+          },
+        );
       }
     },
   );
 });
-
 // Endpoint for retrieving all grid images for every user
 app.get("/all-grid-designs", (req, res) => {
   db.all(`SELECT * FROM grid_designs`, (err, rows) => {
