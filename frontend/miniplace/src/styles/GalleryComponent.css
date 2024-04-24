@@ -13,7 +13,6 @@
   width: 100%;
   max-width: 80vw;
   max-height: 80vh;
-  /* margin-top: -32px; */
 }
 
 .gallery-container img {
@@ -24,8 +23,8 @@
 }
 
 .gallery-text {
-  margin-top: -236px;
-  margin-bottom: 42px;
+  margin-top: -242px;
+  margin-bottom: 36px;
 }
 
 .gallery-text-load {
