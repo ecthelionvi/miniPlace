@@ -7,11 +7,13 @@ import Menubar from "../components/MenuBar";
 import twitter from "../images/twitter.png";
 import React, { useState, useEffect } from "react";
 import ColorPalette from "../components/ColorPalette";
+import GalleryComponent from "../components/GalleryComponent";
 
 const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [grid, setGrid] = useState([]);
   const [undoStack, setUndoStack] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
+  const [showGrid, setShowGrid] = useState(true);
   const [currentColor, setCurrentColor] = useState("#000000");
   const [pickerColor, setPickerColor] = useState("#FFC0CB");
   const [activeTool, setActiveTool] = useState("colorBlock");
@@ -20,6 +22,14 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   useEffect(() => {
     createGrid(30);
   }, []);
+
+  const handleGalleryClick = () => {
+    setShowGrid(false);
+  };
+
+  const handleHomeClick = () => {
+    setShowGrid(true);
+  };
 
   const handleEraserClick = () => {
     setCurrentColor("#ffffff");
@@ -85,21 +95,58 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   };
 
   const handleSave = () => {
-    const savedState = {
-      grid,
-      undoStack,
-      redoStack,
-    };
-    localStorage.setItem("savedState", JSON.stringify(savedState));
+    if (loggedIn && userId) {
+      const gridData = {
+        grid,
+        undoStack,
+        redoStack,
+      };
+
+      html2canvas(document.getElementById("grid")).then((canvas) => {
+        canvas.toBlob((blob) => {
+          const formData = new FormData();
+          formData.append("screenshot", blob, "screenshot.png");
+          formData.append("userId", userId);
+          formData.append("gridData", JSON.stringify(gridData));
+
+          fetch("http://localhost:8000/save-grid-design", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data.message);
+            })
+            .catch((error) => {
+              console.error("Error saving grid design:", error);
+            });
+        });
+      });
+    } else {
+      console.log("User not logged in. Cannot save grid design.");
+    }
   };
 
   const handleLoad = () => {
-    const savedStateString = localStorage.getItem("savedState");
-    if (savedStateString) {
-      const savedState = JSON.parse(savedStateString);
-      setGrid(savedState.grid);
-      setUndoStack(savedState.undoStack);
-      setRedoStack(savedState.redoStack);
+    if (loggedIn && userId) {
+      fetch(`http://localhost:8000/grid-designs/${userId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.gridDesigns.length > 0) {
+            const savedState = data.gridDesigns[0];
+            const gridData = JSON.parse(savedState.gridData);
+            setGrid(gridData.grid);
+            setUndoStack(gridData.undoStack);
+            setRedoStack(gridData.redoStack);
+          } else {
+            console.log("No saved grid designs found.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error loading grid design:", error);
+        });
+    } else {
+      console.log("User not logged in. Cannot load grid design.");
     }
   };
 
@@ -146,19 +193,27 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         handleEraserClick={handleEraserClick}
         handleLogout={handleLogout}
         loggedIn={loggedIn}
+        handleGalleryClick={handleGalleryClick}
+        handleHomeClick={handleHomeClick}
       />
       <main id="homeMain">
-        <Grid grid={grid} handlePixelClick={handlePixelClick} />
-        <ColorPalette
-          currentColor={currentColor}
-          pickerColor={pickerColor}
-          handleColorBlockClick={handleColorBlockClick}
-          handleColorPickerChange={handleColorPickerChange}
-          activeTool={activeTool}
-          setActiveTool={setActiveTool}
-          handleColorPickerClick={handleColorPickerClick}
-        />
-        <img src={footer} alt="Text" id="footerText" />
+        {showGrid ? (
+          <>
+            <Grid grid={grid} handlePixelClick={handlePixelClick} />
+            <ColorPalette
+              currentColor={currentColor}
+              pickerColor={pickerColor}
+              handleColorBlockClick={handleColorBlockClick}
+              handleColorPickerChange={handleColorPickerChange}
+              activeTool={activeTool}
+              setActiveTool={setActiveTool}
+              handleColorPickerClick={handleColorPickerClick}
+            />
+            <img src={footer} alt="Text" id="footerText" />
+          </>
+        ) : (
+          <GalleryComponent />
+        )}
       </main>
       <img src={twitter} alt="twitter" id="twitterButton" onClick={handleTwitterShare} />
       <img src={reddit} alt="reddit" id="redditButton" onClick={handleRedditShare} />

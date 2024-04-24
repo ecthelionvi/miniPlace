@@ -10,6 +10,8 @@
     "html2canvas": "^1.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-images": "^1.2.0-beta.7",
+    "react-photo-gallery": "^8.0.0",
     "react-router-dom": "^6.23.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"

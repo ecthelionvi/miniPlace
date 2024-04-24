@@ -26,17 +26,19 @@ const Menubar = ({
   handleEraserClick,
   handleLogout,
   loggedIn,
+  handleGalleryClick,
+  handleHomeClick,
 }) => {
   return (
     <header id="menuBarHeader">
       <nav id="menuBarNav">
         <img src={logo} alt="Logo" id="navbarLogo" />
         <div className="tooltip">
-          <img src={home} alt="Home" id="homeGrid" />
+          <img src={home} alt="Home" id="homeGrid" onClick={handleHomeClick} />
           <span className="tooltiptext">Home</span>
         </div>
         <div className="tooltip">
-          <img src={gallery} alt="Gallery" id="galleryGrid" />
+          <img src={gallery} alt="Gallery" id="galleryGrid" onClick={handleGalleryClick} />
           <span className="tooltiptext">Gallery</span>
         </div>
         <div className="tooltip">
