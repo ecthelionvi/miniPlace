@@ -3,29 +3,26 @@ import Gallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
 import "../styles/GalleryComponent.css";
 
-const GalleryComponent = ({ userId, handleLoadGrid, setShowGrid }) => {
+const GalleryComponent = () => {
   const [photos, setPhotos] = useState([]);
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
 
   useEffect(() => {
-    if (userId) {
-      fetch(`http://localhost:8000/user-grid-designs/${userId}`)
-        .then((response) => response.json())
-        .then((data) => {
-          const photoData = data.gridDesigns.map((design) => ({
-            src: `data:image/png;base64,${design.screenshot}`,
-            width: design.width,
-            height: design.height,
-            id: design.id,
-          }));
-          setPhotos(photoData);
-        })
-        .catch((error) => {
-          console.error("Error loading photos:", error);
-        });
-    }
-  }, [userId]);
+    fetch(`http://localhost:8000/all-grid-designs`)
+      .then((response) => response.json())
+      .then((data) => {
+        const photoData = data.gridDesigns.map((design) => ({
+          src: `data:image/png;base64,${design.screenshot}`,
+          width: design.width,
+          height: design.height,
+        }));
+        setPhotos(photoData);
+      })
+      .catch((error) => {
+        console.error("Error loading photos:", error);
+      });
+  }, []);
 
   const openLightbox = useCallback((event, { photo, index }) => {
     setCurrentImage(index);
@@ -37,15 +34,9 @@ const GalleryComponent = ({ userId, handleLoadGrid, setShowGrid }) => {
     setViewerIsOpen(false);
   };
 
-  const handleImageClick = (event, { photo }) => {
-    if (photo.id) {
-      handleLoadGrid(photo.id);
-    }
-  };
-
   return (
     <div className="gallery-container">
-      <Gallery photos={photos} onClick={handleImageClick} />
+      <Gallery photos={photos} onClick={openLightbox} />
       <ModalGateway>
         {viewerIsOpen ? (
           <Modal onClose={closeLightbox}>
@@ -54,7 +45,6 @@ const GalleryComponent = ({ userId, handleLoadGrid, setShowGrid }) => {
               views={photos.map((x) => ({
                 ...x,
                 srcset: x.srcSet,
-                caption: `ID: ${x.id}`,
               }))}
             />
           </Modal>

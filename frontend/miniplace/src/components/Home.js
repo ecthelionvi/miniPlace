@@ -23,6 +23,11 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     createGrid(30);
   }, []);
 
+  const handleLogoutGrid = () => {
+    handleLogout();
+    createGrid(30);
+  };
+
   const handleGalleryClick = () => {
     setShowGrid(false);
   };
@@ -150,28 +155,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     }
   };
 
-  const handleLoadGrid = (gridId) => {
-    if (userId) {
-      fetch(`http://localhost:8000/grid-designs/${userId}/${gridId}`)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.gridDesign) {
-            const gridData = JSON.parse(data.gridDesign.gridData);
-            setGrid(gridData.grid);
-            setUndoStack(gridData.undoStack);
-            setRedoStack(gridData.redoStack);
-          } else {
-            console.log("Grid design not found.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error loading grid design:", error);
-        });
-    } else {
-      console.log("User not logged in. Cannot load grid design.");
-    }
-  };
-
   const handleDownload = () => {
     html2canvas(document.getElementById("grid")).then((canvas) => {
       const image = document.createElement("a");
@@ -213,7 +196,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         handleLoad={handleLoad}
         handleDownload={handleDownload}
         handleEraserClick={handleEraserClick}
-        handleLogout={handleLogout}
+        handleLogout={handleLogoutGrid}
         loggedIn={loggedIn}
         handleGalleryClick={handleGalleryClick}
         handleHomeClick={handleHomeClick}
@@ -234,11 +217,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
             <img src={footer} alt="Text" id="footerText" />
           </>
         ) : (
-          <GalleryComponent
-            userId={userId}
-            handleLoadGrid={handleLoadGrid}
-            setShowGrid={setShowGrid}
-          />
+          <GalleryComponent />
         )}
       </main>
       <img src={twitter} alt="twitter" id="twitterButton" onClick={handleTwitterShare} />
