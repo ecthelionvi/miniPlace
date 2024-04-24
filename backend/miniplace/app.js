@@ -142,7 +142,6 @@ app.get("/all-grid-designs", (req, res) => {
         userId: row.user_id,
         screenshot: row.screenshot.toString("base64"),
       }));
-      console.log("The ID is", rows[0].id);
       res.status(200).json({ gridDesigns });
     }
   });

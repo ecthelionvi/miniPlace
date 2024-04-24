@@ -7,13 +7,14 @@ import Menubar from "../components/MenuBar";
 import twitter from "../images/twitter.png";
 import React, { useState, useEffect } from "react";
 import ColorPalette from "../components/ColorPalette";
+import LoadComponent from "../components/LoadComponent";
 import GalleryComponent from "../components/GalleryComponent";
 
 const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [grid, setGrid] = useState([]);
   const [undoStack, setUndoStack] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
-  const [showGrid, setShowGrid] = useState(true);
+  const [showComponent, setShowComponent] = useState("grid");
   const [currentColor, setCurrentColor] = useState("#000000");
   const [pickerColor, setPickerColor] = useState("#FFC0CB");
   const [activeTool, setActiveTool] = useState("colorBlock");
@@ -29,11 +30,11 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   };
 
   const handleGalleryClick = () => {
-    setShowGrid(false);
+    setShowComponent("gallery");
   };
 
   const handleHomeClick = () => {
-    setShowGrid(true);
+    setShowComponent("grid");
   };
 
   const handleEraserClick = () => {
@@ -100,7 +101,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   };
 
   const handleSave = () => {
-    if (loggedIn && userId) {
+    if (loggedIn && userId && showComponent === "grid") {
       const gridData = {
         grid,
         undoStack,
@@ -134,17 +135,23 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
 
   const handleLoad = () => {
     if (loggedIn && userId) {
-      fetch(`http://localhost:8000/grid-designs/${userId}`)
+      setShowComponent("load");
+    }
+  };
+
+  const handleLoadGrid = (gridId) => {
+    if (userId) {
+      fetch(`http://localhost:8000/grid-designs/${userId}/${gridId}`)
         .then((response) => response.json())
         .then((data) => {
-          if (data.gridDesigns.length > 0) {
-            const savedState = data.gridDesigns[0];
-            const gridData = JSON.parse(savedState.gridData);
+          if (data.gridDesign) {
+            const gridData = JSON.parse(data.gridDesign.gridData);
             setGrid(gridData.grid);
             setUndoStack(gridData.undoStack);
             setRedoStack(gridData.redoStack);
+            setShowComponent("grid");
           } else {
-            console.log("No saved grid designs found.");
+            console.log("Grid design not found.");
           }
         })
         .catch((error) => {
@@ -202,7 +209,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         handleHomeClick={handleHomeClick}
       />
       <main id="homeMain">
-        {showGrid ? (
+        {showComponent === "grid" ? (
           <>
             <Grid grid={grid} handlePixelClick={handlePixelClick} />
             <ColorPalette
@@ -216,8 +223,14 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
             />
             <img src={footer} alt="Text" id="footerText" />
           </>
-        ) : (
+        ) : showComponent === "gallery" ? (
           <GalleryComponent />
+        ) : (
+          <LoadComponent
+            userId={userId}
+            handleLoadGrid={handleLoadGrid}
+            setShowComponent={setShowComponent}
+          />
         )}
       </main>
       <img src={twitter} alt="twitter" id="twitterButton" onClick={handleTwitterShare} />
@@ -225,4 +238,5 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     </div>
   );
 };
+
 export default Home;
