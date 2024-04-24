@@ -94,7 +94,6 @@ nav {
   z-index: 10;
 }
 
-
 #multiplayerGrid {
   width: 80px;
   height: auto;
@@ -143,10 +142,18 @@ nav {
   margin-right: 5px;
 }
 
-#accountGrid {
+#signInGrid {
   width: 80px;
   height: auto;
   margin-left: -5px;
+}
+
+#signOutGrid {
+  width: 75px;
+  height: auto;
+  margin-left: -2px;
+  margin-bottom: 2px;
+  margin-top: 2px;
 }
 
 #eraserGrid {
@@ -178,7 +185,8 @@ nav {
 #multiplayerGrid,
 #downloadGrid,
 #loadGrid,
-#accountGrid,
+#signInGrid,
+#signOutGrid,
 #resetGrid,
 #galleryGrid,
 #eraserGrid {
@@ -201,7 +209,9 @@ nav {
 #redditButton:hover,
 #twitterButton:hover,
 #multiplayerGrid:hover,
-#eraserGrid:hover {
+#eraserGrid:hover,
+#signInGrid:hover,
+#signOutGrid:hover {
   opacity: 1;
   filter: drop-shadow(5px 5px 5px #222) brightness(0.9) sepia(2) hue-rotate(0deg) saturate(5);
 }
@@ -394,4 +404,3 @@ main {
     inset 0 4px 4px rgba(0, 0, 0, 0.2),
     0 0 0 4px #ffd700;
 }
-

@@ -8,7 +8,7 @@ import twitter from "../images/twitter.png";
 import React, { useState, useEffect } from "react";
 import ColorPalette from "../components/ColorPalette";
 
-const Home = () => {
+const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [grid, setGrid] = useState([]);
   const [undoStack, setUndoStack] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
@@ -143,6 +143,8 @@ const Home = () => {
         handleLoad={handleLoad}
         handleDownload={handleDownload}
         handleEraserClick={handleEraserClick}
+        handleLogout={handleLogout}
+        loggedIn={loggedIn}
       />
       <main>
         <Grid grid={grid} handlePixelClick={handlePixelClick} />

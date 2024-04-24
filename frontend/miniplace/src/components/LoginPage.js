@@ -12,21 +12,19 @@ const LoginPage = ({ onLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await axios.post("express endpoint", {
+      const response = await axios.post("http://localhost:8000/login", {
         email,
         password,
       });
-
-      onLogin();
+      const { userId } = response.data;
+      onLogin(userId);
       navigate("/");
     } catch (error) {
       console.error("Login error:", error);
       setMessage("Login failed. Please check your credentials.");
     }
   };
-
   return (
     <div className="login-form-container">
       <div className="close-button-container">

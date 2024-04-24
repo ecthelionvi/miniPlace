@@ -1,7 +1,7 @@
 import Home from "./components/Home";
 import React, { useState, useEffect } from "react";
 import LoginPage from "./components/LoginPage";
-import { BrowserRouter as Router, Route, Routes, NavLink, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(() => {
@@ -9,16 +9,20 @@ function App() {
     return sessionLoggedIn === "true";
   });
 
+  const [userId, setUserId] = useState(null);
+
   useEffect(() => {
     sessionStorage.setItem("loggedIn", loggedIn);
   }, [loggedIn]);
 
-  const handleLogin = () => {
+  const handleLogin = (userId) => {
     setLoggedIn(true);
+    setUserId(userId);
   };
 
   const handleLogout = () => {
     setLoggedIn(false);
+    setUserId(null);
   };
 
   return (
@@ -27,7 +31,12 @@ function App() {
         <Route
           path="/"
           element={
-            <Home loggedIn={loggedIn} handleLogin={handleLogin} handleLogout={handleLogout} />
+            <Home
+              loggedIn={loggedIn}
+              handleLogin={handleLogin}
+              handleLogout={handleLogout}
+              userId={userId}
+            />
           }
         />
         <Route path="/login" element={<LoginPage loggedIn={loggedIn} onLogin={handleLogin} />} />

@@ -12,6 +12,7 @@ import download from "../images/download.png";
 import hardDrive from "../images/hard-drive.png";
 import floppyDisk from "../images/floppy-disk.png";
 import multiplayer from "../images/multiplayer.png";
+import signOut from "../images/sign-out.png";
 
 const Menubar = ({
   createGrid,
@@ -22,6 +23,8 @@ const Menubar = ({
   handleLoad,
   handleDownload,
   handleEraserClick,
+  handleLogout,
+  loggedIn,
 }) => {
   return (
     <header>
@@ -68,10 +71,14 @@ const Menubar = ({
           <span className="tooltiptext-load">Download</span>
         </div>
         <div className="tooltip">
-          <NavLink to="/login">
-            <img src={signIn} alt="Account" id="accountGrid" />
-          </NavLink>
-          <span className="tooltiptext-load">Sign In</span>
+          {loggedIn ? (
+            <img src={signOut} alt="Sign Out" id="signOutGrid" onClick={handleLogout} />
+          ) : (
+            <NavLink to="/login">
+              <img src={signIn} alt="Sign In" id="signInGrid" />
+            </NavLink>
+          )}
+          <span className="tooltiptext-load">{loggedIn ? "Sign Out" : "Sign In"}</span>
         </div>
       </nav>
     </header>
