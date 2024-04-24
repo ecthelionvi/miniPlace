@@ -22,12 +22,21 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
+.gallery-container img:hover {
+  opacity: 1;
+  filter: drop-shadow(5px 5px 5px #222) brightness(0.9) sepia(2) hue-rotate(0deg) saturate(5);
+}
+
 .gallery-text {
   margin-top: -242px;
   margin-bottom: 36px;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
 }
 
 .gallery-text-load {
   margin-top: -256px;
   margin-bottom: 42px;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
 }
