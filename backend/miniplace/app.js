@@ -87,49 +87,6 @@ app.post("/save-grid-design", upload.single("screenshot"), (req, res) => {
   );
 });
 
-// // Endpoint for retrieving user's saved grid designs
-// app.get("/grid-designs/:userId", (req, res) => {
-//   const userId = req.params.userId;
-
-//   db.all(`SELECT * FROM grid_designs WHERE user_id = ?`, [userId], (err, rows) => {
-//     if (err) {
-//       console.error(err);
-//       res.status(500).json({ error: "Internal server error" });
-//     } else {
-//       const gridDesigns = rows.map((row) => ({
-//         id: row.id,
-//         screenshot: row.screenshot,
-//         gridData: JSON.parse(row.grid_data),
-//       }));
-//       res.status(200).json({ gridDesigns });
-//     }
-//   });
-// });
-
-// app.get("/grid-designs/:userId/screenshot/:id", (req, res) => {
-//   const userId = req.params.userId;
-//   const id = req.params.id;
-//   db.get(
-//     `SELECT screenshot FROM grid_designs WHERE user_id = ? AND id = ?`,
-//     [userId, id],
-//     (err, row) => {
-//       if (err) {
-//         console.error(err);
-//         res.status(500).json({ error: "Internal server error" });
-//       } else if (!row) {
-//         res.status(404).json({ error: "Grid design not found" });
-//       } else {
-//         const screenshotBlob = row.screenshot;
-//         res.writeHead(200, {
-//           "Content-Type": "image/png",
-//           "Content-Disposition": `attachment; filename="grid_design_${id}.png"`,
-//         });
-//         res.end(screenshotBlob);
-//       }
-//     },
-//   );
-// });
-
 // Endpoint for retrieving all grid images for every user
 app.get("/all-grid-designs", (req, res) => {
   db.all(`SELECT * FROM grid_designs`, (err, rows) => {
@@ -182,6 +139,20 @@ app.get("/grid-designs/:userId/:id", (req, res) => {
         gridData: JSON.parse(row.grid_data),
       };
       res.status(200).json({ gridDesign });
+    }
+  });
+});
+
+app.delete("/grid-designs/:userId/:id", (req, res) => {
+  const userId = req.params.userId;
+  const id = req.params.id;
+
+  db.run(`DELETE FROM grid_designs WHERE user_id = ? AND id = ?`, [userId, id], (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: "Internal server error" });
+    } else {
+      res.status(200).json({ message: "Grid design deleted successfully" });
     }
   });
 });

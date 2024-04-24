@@ -102,6 +102,13 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
 
   const handleSave = () => {
     if (loggedIn && userId && showComponent === "grid") {
+      const isAllWhite = grid.every((color) => color === "#ffffff");
+
+      if (isAllWhite) {
+        console.log("Cannot save an empty grid.");
+        return;
+      }
+
       const gridData = {
         grid,
         undoStack,
@@ -132,7 +139,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       console.log("User not logged in. Cannot save grid design.");
     }
   };
-
   const handleLoad = () => {
     if (loggedIn && userId) {
       setShowComponent("load");
