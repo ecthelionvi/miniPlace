@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/ColorPalette.css";
 
 const ColorPalette = ({
   currentColor,
@@ -7,7 +8,7 @@ const ColorPalette = ({
   handleColorPickerChange,
   activeTool,
   setActiveTool,
-  handleColorPickerWrapperClick,
+  handleColorPickerClick,
 }) => {
   return (
     <div id="colorPalette">
@@ -46,18 +47,14 @@ const ColorPalette = ({
         style={{ backgroundColor: "#000000" }}
         onClick={() => handleColorBlockClick("#000000")}
       ></div>
-      <div
-        id="colorPickerWrapper"
+      <input
+        type="color"
+        id="colorPicker"
+        value={pickerColor}
+        onChange={handleColorPickerChange}
+        onClick={handleColorPickerClick}
         className={activeTool === "colorPicker" ? "selected" : ""}
-        onClick={handleColorPickerWrapperClick}
-      >
-        <input
-          type="color"
-          id="colorPicker"
-          value={pickerColor}
-          onChange={handleColorPickerChange}
-        />
-      </div>
+      />
     </div>
   );
 };

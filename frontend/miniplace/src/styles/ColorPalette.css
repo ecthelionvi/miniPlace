@@ -1,0 +1,53 @@
+#colorPalette {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.colorBlock {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border: 2px solid #000;
+}
+
+.colorBlock:hover {
+  border-color: #000;
+}
+
+.colorBlock.selected {
+  transform: scale(0.9);
+  border: 2px solid #000;
+  box-shadow:
+    inset 0 4px 4px rgba(0, 0, 0, 0.2),
+    0 0 0 4px #ffd700;
+}
+
+#colorPicker {
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  border: 2px solid #000;
+}
+
+#colorPicker:hover {
+  border-color: #000;
+}
+
+#colorPicker.selected {
+  transform: scale(0.9);
+  border: 2px solid #000;
+  box-shadow:
+    inset 0 4px 4px rgba(0, 0, 0, 0.2),
+    0 0 0 4px #ffd700;
+}
+
+#colorPicker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+#colorPicker::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}

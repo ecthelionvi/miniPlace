@@ -26,14 +26,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     setActiveTool("eraser");
   };
 
-  const handleColorPickerWrapperClick = () => {
-    setActiveTool("colorPicker");
-    if (currentColor !== pickerColor) {
-      setCurrentColor(lastPickerColor);
-      setPickerColor(lastPickerColor);
-    }
-  };
-
   const handleColorPickerChange = (e) => {
     const color = e.target.value;
     setCurrentColor(color);
@@ -41,6 +33,15 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     setLastPickerColor(color);
     setActiveTool("colorPicker");
   };
+
+  const handleColorPickerClick = () => {
+    if (currentColor !== pickerColor) {
+      setCurrentColor(lastPickerColor);
+      setPickerColor(lastPickerColor);
+    }
+    setActiveTool("colorPicker");
+  };
+
   const handleColorBlockClick = (color) => {
     setCurrentColor(color);
     setActiveTool("colorBlock");
@@ -155,7 +156,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
           handleColorPickerChange={handleColorPickerChange}
           activeTool={activeTool}
           setActiveTool={setActiveTool}
-          handleColorPickerWrapperClick={handleColorPickerWrapperClick}
+          handleColorPickerClick={handleColorPickerClick}
         />
         <img src={footer} alt="Text" id="footerText" />
       </main>

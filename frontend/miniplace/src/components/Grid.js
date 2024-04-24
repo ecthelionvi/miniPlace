@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/Grid.css";
 
 const Grid = ({ grid, handlePixelClick }) => {
   return (
