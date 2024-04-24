@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/MenuBar.css";
 import logo from "../images/logo.png";
 import home from "../images/home.png";
 import unDo from "../images/undo.png";
@@ -27,8 +28,8 @@ const Menubar = ({
   loggedIn,
 }) => {
   return (
-    <header>
-      <nav id="menuBar">
+    <header id="menuBarHeader">
+      <nav id="menuBarNav">
         <img src={logo} alt="Logo" id="navbarLogo" />
         <div className="tooltip">
           <img src={home} alt="Home" id="homeGrid" />

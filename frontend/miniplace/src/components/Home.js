@@ -133,7 +133,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   };
 
   return (
-    <div>
+    <div id="homeBody">
       <Menubar
         createGrid={createGrid}
         setCurrentColor={setCurrentColor}
@@ -146,7 +146,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         handleLogout={handleLogout}
         loggedIn={loggedIn}
       />
-      <main>
+      <main id="homeMain">
         <Grid grid={grid} handlePixelClick={handlePixelClick} />
         <ColorPalette
           currentColor={currentColor}

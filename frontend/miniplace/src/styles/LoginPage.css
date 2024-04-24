@@ -7,6 +7,12 @@
   height: 100vh;
   color: #fff;
   font-family: "JetBrainsMonoNerdFont", sans-serif;
+  background: linear-gradient(
+    135deg,
+    rgba(106, 27, 154, 0.8),
+    rgba(49, 27, 146, 0.8),
+    rgba(26, 35, 126, 0.8)
+  );
 }
 
 .login-form-wrapper {
