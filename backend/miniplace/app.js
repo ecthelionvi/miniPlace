@@ -146,6 +146,45 @@ app.get("/all-grid-designs", (req, res) => {
     }
   });
 });
+
+// Endpoint for retrieving all grid designs for a specific user
+app.get("/user-grid-designs/:userId", (req, res) => {
+  const userId = req.params.userId;
+
+  db.all(`SELECT * FROM grid_designs WHERE user_id = ?`, [userId], (err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: "Internal server error" });
+    } else {
+      const gridDesigns = rows.map((row) => ({
+        id: row.id,
+        screenshot: row.screenshot.toString("base64"),
+        gridData: JSON.parse(row.grid_data),
+      }));
+      res.status(200).json({ gridDesigns });
+    }
+  });
+});
+
+app.get("/grid-designs/:userId/:id", (req, res) => {
+  const userId = req.params.userId;
+  const id = req.params.id;
+
+  db.get(`SELECT * FROM grid_designs WHERE user_id = ? AND id = ?`, [userId, id], (err, row) => {
+    if (err) {
+      console.error(err);
+      res.status(500).json({ error: "Internal server error" });
+    } else if (!row) {
+      res.status(404).json({ error: "Grid design not found" });
+    } else {
+      const gridDesign = {
+        id: row.id,
+        gridData: JSON.parse(row.grid_data),
+      };
+      res.status(200).json({ gridDesign });
+    }
+  });
+});
 // Start the server
 app.listen(8000, () => {
   console.log("Server is running on port 8000");

@@ -7,13 +7,11 @@
   max-width: 80vw;
   max-height: 80vh;
   margin-top: -32px;
-  /* margin: 0 auto; */
 }
 
 .gallery-container img {
   width: 320px;
   height: auto;
   margin: 10px;
-  /* border-radius: 5px; */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
