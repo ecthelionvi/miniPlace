@@ -1,3 +1,5 @@
+@import "../styles/Fonts.css";
+
 #homeBody {
   display: flex;
   flex-direction: column;
@@ -5,7 +7,7 @@
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  font-family: Arial, sans-serif;
+  font-family: "JetBrainsMonoNerdFont", sans-serif;
   background: linear-gradient(
     135deg,
     rgba(106, 27, 154, 0.8),
@@ -206,4 +208,37 @@
   :root {
     --grid-size: 10px;
   }
+}
+
+#roomCodeContainer {
+  margin-left: 10px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  -webkit-filter: drop-shadow(2px 2px 2px #222);
+  filter: drop-shadow(2px 2px 2px #222);
+}
+
+#roomCodeContainer span {
+  margin-right: 10px;
+  font-weight: bold;
+  font-family: "JetBrainsMonoNerdFont", sans-serif;
+}
+
+#roomCodeContainer button {
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  -webkit-filter: drop-shadow(1px 1px 1px #222);
+  filter: drop-shadow(1px 1px 1px #222);
+}
+
+#roomCodeContainer button:hover {
+  opacity: 1;
+  filter: drop-shadow(1px 1px 1px #222) brightness(0.9) sepia(2) hue-rotate(0deg) saturate(5);
 }

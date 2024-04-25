@@ -1,4 +1,5 @@
 import "../styles/Home.css";
+import { v4 as uuidv4 } from "uuid";
 import html2canvas from "html2canvas";
 import Grid from "../components/Grid";
 import footer from "../images/footer.png";
@@ -24,6 +25,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [currentColor, setCurrentColor] = useState("#000000");
   const [pickerColor, setPickerColor] = useState("#FFC0CB");
   const [activeTool, setActiveTool] = useState("colorBlock");
+  const [roomCode, setRoomCode] = useState("");
   const [lastPickerColor, setLastPickerColor] = useState("#FFC0CB");
   const [showRoomCodePopup, setShowRoomCodePopup] = useState(false);
   const [previousColor, setPreviousColor] = useState("#ffffff");
@@ -44,6 +46,23 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     }
   };
 
+  const handleCopyRoomCode = () => {
+    if (!roomCode) {
+      alert("No room code available to copy.");
+      return;
+    }
+    navigator.clipboard
+      .writeText(roomCode)
+      .then(() => {
+        alert("Room code copied to clipboard.");
+        console.log("Room code copied to clipboard");
+      })
+      .catch((error) => {
+        alert("Failed to copy room code. Please try again.");
+        console.error("Failed to copy room code:", error);
+      });
+  };
+
   const handleJoinButtonClick = () => {
     setShowRoomCodePopup(true);
   };
@@ -55,14 +74,20 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
 
   const handlePlayClick = () => {
     if (playClicked === true) {
+      setPlayClicked(!playClicked);
+      setRoomCode("");
     } else {
       setPlayClicked(!playClicked);
+      const newRoomCode = uuidv4().slice(0, 8); // Truncate the UUID to the first 8 characters
+      setRoomCode(newRoomCode);
+      console.log("Room Code:", newRoomCode);
     }
   };
 
   const handleStopClick = () => {
     if (playClicked === true) {
       setPlayClicked(!playClicked);
+      setRoomCode("");
     }
   };
 
@@ -208,6 +233,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       console.log("User not logged in. Cannot save grid design.");
     }
   };
+
   const handleLoad = () => {
     if (loggedIn && userId) {
       setShowComponent("load");
@@ -318,6 +344,12 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
                 />
                 <span className="tooltiptext-button">Join</span>
               </div>
+              {roomCode && (
+                <div id="roomCodeContainer">
+                  <span>{roomCode}</span>
+                  <button onClick={handleCopyRoomCode}>Copy</button>
+                </div>
+              )}
             </>
           ) : null}
         </div>
