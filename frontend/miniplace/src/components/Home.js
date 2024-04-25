@@ -78,14 +78,22 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     setShowRoomCodePopup(true);
   };
 
-  const handleJoinRoom = (roomCode) => {
-    console.log("Joining room with code:", roomCode);
-    setRoomCode(roomCode);
-    setShowRoomCodePopup(false);
-    socket.emit("joinRoom", roomCode);
-    socket.emit("requestGridState", roomCode);
-  };
+  const handleJoinRoom = (enteredRoomCode, callback) => {
+    console.log("Joining room with code:", enteredRoomCode);
 
+    socket.emit("checkRoomCode", enteredRoomCode, (isValid) => {
+      if (isValid) {
+        setRoomCode(enteredRoomCode);
+        setShowRoomCodePopup(false);
+        socket.emit("joinRoom", enteredRoomCode);
+        socket.emit("requestGridState", enteredRoomCode);
+        setPlayClicked(true);
+      } else {
+        console.log("Invalid room code:", enteredRoomCode);
+        callback(false);
+      }
+    });
+  };
   // const handlePlayClick = () => {
   //   if (playClicked === true) {
   //     setPlayClicked(!playClicked);
@@ -100,16 +108,22 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
 
   const handlePlayClick = () => {
     if (playClicked === true) {
-      setPlayClicked(!playClicked);
+      setPlayClicked(false);
       setRoomCode("");
-      socket.disconnect();
+      if (socket) {
+        socket.disconnect();
+        setSocket(null);
+        console.log("Socket disconnected");
+      }
     } else {
-      setPlayClicked(!playClicked);
+      setPlayClicked(true);
       const newRoomCode = uuidv4().slice(0, 8);
       setRoomCode(newRoomCode);
       console.log("Room Code:", newRoomCode);
-      socket.emit("joinRoom", newRoomCode);
-      socket.emit("requestGridState", newRoomCode);
+      const newSocket = io("http://localhost:8001");
+      setSocket(newSocket);
+      newSocket.emit("createRoom", newRoomCode);
+      newSocket.emit("requestGridState", newRoomCode);
     }
   };
 
@@ -128,12 +142,28 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       socket.on("gridState", (receivedGrid) => {
         setGrid(receivedGrid);
       });
+
+      socket.on("activeRoomCodes", (roomCodes) => {
+        console.log("Active Room Codes:", roomCodes);
+        // You can update your UI or perform any other actions with the active room codes
+      });
+
+      return () => {
+        socket.off("pixelUpdate");
+        socket.off("requestGridState");
+        socket.off("gridState");
+        socket.off("activeRoomCodes");
+      };
     }
   }, [socket, grid, roomCode]);
-
   const handleStopClick = () => {
-    if (playClicked === true) {
-      setPlayClicked(!playClicked);
+    if (socket) {
+      setRoomCode("");
+      setPlayClicked(false);
+      socket.disconnect();
+      console.log("Socket disconnected");
+    } else if (playClicked === true) {
+      setPlayClicked(false);
       setRoomCode("");
     }
   };

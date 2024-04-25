@@ -2,6 +2,7 @@ const http = require("http");
 const socketIO = require("socket.io");
 
 const socketServer = http.createServer();
+
 const io = socketIO(socketServer, {
   cors: {
     origin: "http://localhost:3000",
@@ -11,12 +12,30 @@ const io = socketIO(socketServer, {
   },
 });
 
+const activeRoomCodes = new Set();
+
 io.on("connection", (socket) => {
   console.log("New client connected");
 
-  socket.on("joinRoom", (roomCode) => {
+  socket.on("createRoom", (roomCode) => {
+    activeRoomCodes.add(roomCode);
     socket.join(roomCode);
-    console.log(`Client joined room: ${roomCode}`);
+    console.log(`Client created room: ${roomCode}`);
+    io.emit("activeRoomCodes", Array.from(activeRoomCodes));
+  });
+
+  socket.on("checkRoomCode", (roomCode, callback) => {
+    const isValid = activeRoomCodes.has(roomCode);
+    callback(isValid);
+  });
+
+  socket.on("joinRoom", (roomCode) => {
+    if (activeRoomCodes.has(roomCode)) {
+      socket.join(roomCode);
+      console.log(`Client joined room: ${roomCode}`);
+    } else {
+      console.log(`Invalid room code: ${roomCode}`);
+    }
   });
 
   socket.on("pixelUpdate", ({ roomCode, pixelIndex, color }) => {

@@ -44,7 +44,12 @@
 }
 
 .room-code-popup-group {
-  margin-bottom: 15px;
+  margin-bottom: 30px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .room-code-popup-label {
@@ -59,6 +64,7 @@
   border: 1px solid #ccc;
   border-radius: 3px;
   box-sizing: border-box;
+  margin-bottom: -10px;
 }
 
 .room-code-popup-button {
@@ -72,11 +78,21 @@
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .room-code-popup-button:hover {
   opacity: 1;
   filter: drop-shadow(5px 5px 5px #222) brightness(0.9) sepia(2) hue-rotate(0deg) saturate(5);
+}
+
+.room-code-popup-error {
+  color: #ff6b6b;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 27px;
+  margin-bottom: -10px;
+  bottom: -25px;
+  left: 0;
+  right: 0;
 }
