@@ -37,6 +37,10 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       createGrid(30);
     } else {
       setShowComponent("grid");
+      setActiveTool("colorBlock");
+      if (currentColor === pickerColor) {
+        setActiveTool("colorPicker");
+      }
     }
   };
 
