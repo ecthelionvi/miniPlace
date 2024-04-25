@@ -13,6 +13,7 @@
   width: 100%;
   max-width: 80vw;
   max-height: 80vh;
+  margin: 0 auto;
 }
 
 .gallery-container img {
@@ -28,14 +29,14 @@
 }
 
 .gallery-text {
-  margin-top: -242px;
+  margin-top: 20px;
   margin-bottom: 36px;
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);
 }
 
 .gallery-text-load {
-  margin-top: -256px;
+  margin-top: 20px;
   margin-bottom: 42px;
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);

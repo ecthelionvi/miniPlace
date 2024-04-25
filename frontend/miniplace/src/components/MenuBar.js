@@ -28,6 +28,7 @@ const Menubar = ({
   loggedIn,
   handleGalleryClick,
   handleHomeClick,
+  handleMultiplayerClick,
 }) => {
   return (
     <header id="menuBarHeader">
@@ -66,7 +67,12 @@ const Menubar = ({
           <span className="tooltiptext-load">Load</span>
         </div>
         <div className="tooltip">
-          <img src={multiplayer} alt="Multiplayer" id="multiplayerGrid" onClick={handleDownload} />
+          <img
+            src={multiplayer}
+            alt="Multiplayer"
+            id="multiplayerGrid"
+            onClick={handleMultiplayerClick}
+          />
           <span className="tooltiptext-load">Multiplayer</span>
         </div>
         <div className="tooltip">

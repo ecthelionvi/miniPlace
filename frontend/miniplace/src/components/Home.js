@@ -9,11 +9,16 @@ import React, { useState, useEffect } from "react";
 import ColorPalette from "../components/ColorPalette";
 import LoadComponent from "../components/LoadComponent";
 import GalleryComponent from "../components/GalleryComponent";
+import RecButton from "../images/rec-button.png";
+import StopButton from "../images/stop-button.png";
+import PlayButton from "../images/play.png";
+import JoinButton from "../images/join.png";
 
 const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [grid, setGrid] = useState([]);
   const [undoStack, setUndoStack] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
+  const [multiplayerClick, setMultiplayerClick] = useState(false);
   const [showComponent, setShowComponent] = useState("grid");
   const [currentColor, setCurrentColor] = useState("#000000");
   const [pickerColor, setPickerColor] = useState("#FFC0CB");
@@ -23,6 +28,12 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   useEffect(() => {
     createGrid(30);
   }, []);
+
+  const handleMultiplayerClick = () => {
+    setMultiplayerClick((prevState) => {
+      return !prevState;
+    });
+  };
 
   const handleLogoutGrid = () => {
     handleLogout();
@@ -215,34 +226,51 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         loggedIn={loggedIn}
         handleGalleryClick={handleGalleryClick}
         handleHomeClick={handleHomeClick}
+        handleMultiplayerClick={handleMultiplayerClick}
       />
-      <main id="homeMain">
-        {showComponent === "grid" ? (
-          <>
-            <Grid grid={grid} handlePixelClick={handlePixelClick} />
-            <ColorPalette
-              currentColor={currentColor}
-              pickerColor={pickerColor}
-              handleColorBlockClick={handleColorBlockClick}
-              handleColorPickerChange={handleColorPickerChange}
-              activeTool={activeTool}
-              setActiveTool={setActiveTool}
-              handleColorPickerClick={handleColorPickerClick}
+      <div
+        id="mainContainer"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div id="buttonContainer">
+          <img src={RecButton} alt="Record Button" />
+          <img src={PlayButton} alt="Play Button" />
+          <img src={StopButton} alt="Stop Button" />
+          <img src={JoinButton} alt="Join Button" />
+        </div>
+        <div id="gridContainer">
+          {showComponent === "grid" ? (
+            <>
+              <Grid grid={grid} handlePixelClick={handlePixelClick} />
+              <ColorPalette
+                currentColor={currentColor}
+                pickerColor={pickerColor}
+                handleColorBlockClick={handleColorBlockClick}
+                handleColorPickerChange={handleColorPickerChange}
+                activeTool={activeTool}
+                setActiveTool={setActiveTool}
+                handleColorPickerClick={handleColorPickerClick}
+              />
+              <img src={footer} alt="Text" id="footerText" />
+            </>
+          ) : showComponent === "gallery" ? (
+            <GalleryComponent />
+          ) : (
+            <LoadComponent
+              userId={userId}
+              handleLoadGrid={handleLoadGrid}
+              setShowComponent={setShowComponent}
             />
-            <img src={footer} alt="Text" id="footerText" />
-          </>
-        ) : showComponent === "gallery" ? (
-          <GalleryComponent />
-        ) : (
-          <LoadComponent
-            userId={userId}
-            handleLoadGrid={handleLoadGrid}
-            setShowComponent={setShowComponent}
-          />
-        )}
-      </main>
-      <img src={twitter} alt="twitter" id="twitterButton" onClick={handleTwitterShare} />
-      <img src={reddit} alt="reddit" id="redditButton" onClick={handleRedditShare} />
+          )}
+        </div>
+      </div>
+      <img src={twitter} alt="Twitter" id="twitterButton" onClick={handleTwitterShare} />
+      <img src={reddit} alt="Reddit" id="redditButton" onClick={handleRedditShare} />
     </div>
   );
 };
