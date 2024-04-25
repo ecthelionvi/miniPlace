@@ -10,19 +10,19 @@ const RoomCodePopup = ({ onJoinRoom, onClose }) => {
     onJoinRoom(roomCode);
   };
 
-  const handleClickOutside = (e) => {
-    if (popupRef.current && !popupRef.current.contains(e.target)) {
-      onClose();
-    }
-  };
-
-  const handleEscapeKey = (e) => {
-    if (e.key === "Escape") {
-      onClose();
-    }
-  };
-
   useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (popupRef.current && !popupRef.current.contains(e.target)) {
+        onClose();
+      }
+    };
+
+    const handleEscapeKey = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleEscapeKey);
 
@@ -30,8 +30,7 @@ const RoomCodePopup = ({ onJoinRoom, onClose }) => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEscapeKey);
     };
-  }, []);
-
+  }, [onClose]);
   return (
     <div className="room-code-popup-overlay">
       <div className="room-code-popup-container" ref={popupRef}>

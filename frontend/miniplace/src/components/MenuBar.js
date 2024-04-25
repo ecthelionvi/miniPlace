@@ -12,7 +12,6 @@ import gallery from "../images/gallery.png";
 import download from "../images/download.png";
 import hardDrive from "../images/hard-drive.png";
 import floppyDisk from "../images/floppy-disk.png";
-import multiplayer from "../images/multiplayer.png";
 import signOut from "../images/sign-out.png";
 
 const Menubar = ({
