@@ -200,14 +200,16 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   };
 
   const handleDownload = () => {
-    html2canvas(document.getElementById("grid")).then((canvas) => {
-      const image = document.createElement("a");
-      image.href = canvas.toDataURL("image/png");
-      image.download = "miniPlace-artwork.png";
-      document.body.appendChild(image);
-      image.click();
-      document.body.removeChild(image);
-    });
+    if (showComponent === "grid") {
+      html2canvas(document.getElementById("grid")).then((canvas) => {
+        const image = document.createElement("a");
+        image.href = canvas.toDataURL("image/png");
+        image.download = "miniPlace-artwork.png";
+        document.body.appendChild(image);
+        image.click();
+        document.body.removeChild(image);
+      });
+    }
   };
 
   const handleTwitterShare = () => {
