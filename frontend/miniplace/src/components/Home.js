@@ -229,15 +229,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     console.log("Color selected:", color);
   };
 
-  // const handlePixelClick = (index) => {
-  //   const newGrid = [...grid];
-  //   const prevColor = newGrid[index];
-  //   newGrid[index] = currentColor;
-  //   setGrid(newGrid);
-  //   setUndoStack([...undoStack, { pixelIndex: index, color: prevColor }]);
-  //   setRedoStack([]);
-  // };
-
   const handlePixelClick = (index) => {
     const newGrid = [...grid];
     const prevColor = newGrid[index];

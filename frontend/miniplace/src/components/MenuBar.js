@@ -33,51 +33,53 @@ const Menubar = ({
     <header id="menuBarHeader">
       <nav id="menuBarNav">
         <img src={logo} alt="Logo" id="navbarLogo" />
-        <div className="tooltip">
-          <img src={home} alt="Home" id="homeGrid" onClick={handleHomeClick} />
-          <span className="tooltiptext">Home</span>
-        </div>
-        <div className="tooltip">
-          <img src={gallery} alt="Gallery" id="galleryGrid" onClick={handleGalleryClick} />
-          <span className="tooltiptext">Gallery</span>
-        </div>
-        <div className="tooltip">
-          <img src={trash} alt="Reset" id="resetGrid" onClick={handleTrashClick} />
-          <span className="tooltiptext">Trash</span>
-        </div>
-        <div className="tooltip">
-          <img src={eraser} alt="Eraser" id="eraserGrid" onClick={handleEraserClick} />
-          <span className="tooltiptext">Eraser</span>
-        </div>
-        <div className="tooltip">
-          <img src={unDo} alt="Reset" id="undoGrid" onClick={handleUndo} />
-          <span className="tooltiptext">Undo</span>
-        </div>
-        <div className="tooltip">
-          <img src={reDo} alt="Reset" id="redoGrid" onClick={handleRedo} />
-          <span className="tooltiptext">Redo</span>
-        </div>
-        <div className="tooltip">
-          <img src={hardDrive} alt="Save" id="saveGrid" onClick={handleSave} />
-          <span className="tooltiptext">Save</span>
-        </div>
-        <div className="tooltip">
-          <img src={floppyDisk} alt="Save" id="loadGrid" onClick={handleLoad} />
-          <span className="tooltiptext-load">Load</span>
-        </div>
-        <div className="tooltip">
-          <img src={download} alt="Download" id="downloadGrid" onClick={handleDownload} />
-          <span className="tooltiptext-load">Download</span>
-        </div>
-        <div className="tooltip">
-          {loggedIn ? (
-            <img src={signOut} alt="Sign Out" id="signOutGrid" onClick={handleLogout} />
-          ) : (
-            <NavLink to="/login">
-              <img src={signIn} alt="Sign In" id="signInGrid" />
-            </NavLink>
-          )}
-          <span className="tooltiptext-load">{loggedIn ? "Sign Out" : "Sign In"}</span>
+        <div className="buttonContainer">
+          <div className="tooltip">
+            <img src={home} alt="Home" id="homeGrid" onClick={handleHomeClick} />
+            <span className="tooltiptext">Home</span>
+          </div>
+          <div className="tooltip">
+            <img src={gallery} alt="Gallery" id="galleryGrid" onClick={handleGalleryClick} />
+            <span className="tooltiptext">Gallery</span>
+          </div>
+          <div className="tooltip">
+            <img src={trash} alt="Reset" id="resetGrid" onClick={handleTrashClick} />
+            <span className="tooltiptext">Trash</span>
+          </div>
+          <div className="tooltip">
+            <img src={eraser} alt="Eraser" id="eraserGrid" onClick={handleEraserClick} />
+            <span className="tooltiptext">Eraser</span>
+          </div>
+          <div className="tooltip">
+            <img src={unDo} alt="Reset" id="undoGrid" onClick={handleUndo} />
+            <span className="tooltiptext">Undo</span>
+          </div>
+          <div className="tooltip">
+            <img src={reDo} alt="Reset" id="redoGrid" onClick={handleRedo} />
+            <span className="tooltiptext">Redo</span>
+          </div>
+          <div className="tooltip">
+            <img src={hardDrive} alt="Save" id="saveGrid" onClick={handleSave} />
+            <span className="tooltiptext">Save</span>
+          </div>
+          <div className="tooltip">
+            <img src={floppyDisk} alt="Save" id="loadGrid" onClick={handleLoad} />
+            <span className="tooltiptext-load">Load</span>
+          </div>
+          <div className="tooltip">
+            <img src={download} alt="Download" id="downloadGrid" onClick={handleDownload} />
+            <span className="tooltiptext-load">Download</span>
+          </div>
+          <div className="tooltip">
+            {loggedIn ? (
+              <img src={signOut} alt="Sign Out" id="signOutGrid" onClick={handleLogout} />
+            ) : (
+              <NavLink to="/login">
+                <img src={signIn} alt="Sign In" id="signInGrid" />
+              </NavLink>
+            )}
+            <span className="tooltiptext-load">{loggedIn ? "Sign Out" : "Sign In"}</span>
+          </div>
         </div>
       </nav>
     </header>

@@ -174,20 +174,23 @@
   filter: drop-shadow(5px 5px 5px #222);
 }
 
-@media (max-width: 915px) {
+#navbarLogo {
+  width: 420px;
+  height: auto;
+  margin-bottom: -10px;
+}
+
+@media (max-width: 1209px) {
   :root {
     --grid-size: 18px;
   }
 
   #navbarLogo {
-    width: 60vw;
+    margin-bottom: 10px;
   }
+}
 
-  #resetGrid,
-  #saveGrid {
-    width: 12vw;
-  }
-
+@media (max-width: 915px) {
   #clickText,
   #footerText {
     width: 50vw;
@@ -197,10 +200,6 @@
 @media (max-width: 480px) {
   :root {
     --grid-size: 12px;
-  }
-
-  #navbarLogo {
-    width: 60vw;
   }
 }
 

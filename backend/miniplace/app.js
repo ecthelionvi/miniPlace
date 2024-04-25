@@ -10,7 +10,7 @@ const app = express();
 const port = 8000;
 app.use(
   cors({
-    origin: "http://localhost:8000",
+    origin: "http://localhost:3000",
   }),
   bodyParser.json(),
 );
