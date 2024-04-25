@@ -27,6 +27,7 @@ const Menubar = ({
   loggedIn,
   handleGalleryClick,
   handleHomeClick,
+  handleTrashClick,
 }) => {
   return (
     <header id="menuBarHeader">
@@ -41,7 +42,7 @@ const Menubar = ({
           <span className="tooltiptext">Gallery</span>
         </div>
         <div className="tooltip">
-          <img src={trash} alt="Reset" id="resetGrid" onClick={() => createGrid(30)} />
+          <img src={trash} alt="Reset" id="resetGrid" onClick={handleTrashClick} />
           <span className="tooltiptext">Trash</span>
         </div>
         <div className="tooltip">

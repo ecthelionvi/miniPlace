@@ -26,10 +26,19 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [activeTool, setActiveTool] = useState("colorBlock");
   const [lastPickerColor, setLastPickerColor] = useState("#FFC0CB");
   const [showRoomCodePopup, setShowRoomCodePopup] = useState(false);
+  const [previousColor, setPreviousColor] = useState("#ffffff");
 
   useEffect(() => {
     createGrid(30);
   }, []);
+
+  const handleTrashClick = () => {
+    if (showComponent === "grid") {
+      createGrid(30);
+    } else {
+      setShowComponent("grid");
+    }
+  };
 
   const handleJoinButtonClick = () => {
     setShowRoomCodePopup(true);
@@ -68,6 +77,25 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
 
   const handleEraserClick = () => {
     if (showComponent === "grid") {
+      if (activeTool === "eraser") {
+        if (previousColor !== "#ffffff") {
+          setCurrentColor(previousColor);
+          if (previousColor === pickerColor) {
+            setActiveTool("colorPicker");
+          } else {
+            setActiveTool("colorBlock");
+          }
+        } else {
+          setCurrentColor("#000000");
+          setActiveTool("colorBlock");
+        }
+      } else {
+        setPreviousColor(currentColor);
+        setCurrentColor("#ffffff");
+        setActiveTool("eraser");
+      }
+    } else {
+      setShowComponent("grid");
       setCurrentColor("#ffffff");
       setActiveTool("eraser");
     }
@@ -92,14 +120,15 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const handleColorBlockClick = (color) => {
     setCurrentColor(color);
     setActiveTool("colorBlock");
+    console.log("Color selected:", color);
   };
 
   const handlePixelClick = (index) => {
     const newGrid = [...grid];
-    const previousColor = newGrid[index];
+    const prevColor = newGrid[index];
     newGrid[index] = currentColor;
     setGrid(newGrid);
-    setUndoStack([...undoStack, { pixelIndex: index, color: previousColor }]);
+    setUndoStack([...undoStack, { pixelIndex: index, color: prevColor }]);
     setRedoStack([]);
   };
 
@@ -114,6 +143,8 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         ...redoStack,
         { pixelIndex: lastAction.pixelIndex, color: grid[lastAction.pixelIndex] },
       ]);
+    } else {
+      setShowComponent("grid");
     }
   };
 
@@ -128,6 +159,8 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         ...undoStack,
         { pixelIndex: lastUndo.pixelIndex, color: grid[lastUndo.pixelIndex] },
       ]);
+    } else {
+      setShowComponent("grid");
     }
   };
 
@@ -167,12 +200,15 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         });
       });
     } else {
+      setShowComponent("grid");
       console.log("User not logged in. Cannot save grid design.");
     }
   };
   const handleLoad = () => {
     if (loggedIn && userId) {
       setShowComponent("load");
+    } else if (showComponent != "grid") {
+      setShowComponent("grid");
     }
   };
 
@@ -246,6 +282,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         loggedIn={loggedIn}
         handleGalleryClick={handleGalleryClick}
         handleHomeClick={handleHomeClick}
+        handleTrashClick={handleTrashClick}
       />
       <div
         id="mainContainer"
