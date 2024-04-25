@@ -1,4 +1,5 @@
 import "../styles/Home.css";
+import io from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
 import html2canvas from "html2canvas";
 import Grid from "../components/Grid";
@@ -20,6 +21,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [grid, setGrid] = useState([]);
   const [undoStack, setUndoStack] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
+  const [socket, setSocket] = useState(null);
   const [playClicked, setPlayClicked] = useState(false);
   const [showComponent, setShowComponent] = useState("grid");
   const [currentColor, setCurrentColor] = useState("#000000");
@@ -32,6 +34,15 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
 
   useEffect(() => {
     createGrid(30);
+  }, []);
+
+  useEffect(() => {
+    const newSocket = io("http://localhost:8001");
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect();
+    };
   }, []);
 
   const handleTrashClick = () => {
@@ -69,20 +80,56 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
 
   const handleJoinRoom = (roomCode) => {
     console.log("Joining room with code:", roomCode);
+    setRoomCode(roomCode);
     setShowRoomCodePopup(false);
+    socket.emit("joinRoom", roomCode);
+    socket.emit("requestGridState", roomCode);
   };
+
+  // const handlePlayClick = () => {
+  //   if (playClicked === true) {
+  //     setPlayClicked(!playClicked);
+  //     setRoomCode("");
+  //   } else {
+  //     setPlayClicked(!playClicked);
+  //     const newRoomCode = uuidv4().slice(0, 8);
+  //     setRoomCode(newRoomCode);
+  //     console.log("Room Code:", newRoomCode);
+  //   }
+  // };
 
   const handlePlayClick = () => {
     if (playClicked === true) {
       setPlayClicked(!playClicked);
       setRoomCode("");
+      socket.disconnect();
     } else {
       setPlayClicked(!playClicked);
-      const newRoomCode = uuidv4().slice(0, 8); // Truncate the UUID to the first 8 characters
+      const newRoomCode = uuidv4().slice(0, 8);
       setRoomCode(newRoomCode);
       console.log("Room Code:", newRoomCode);
+      socket.emit("joinRoom", newRoomCode);
+      socket.emit("requestGridState", newRoomCode);
     }
   };
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("pixelUpdate", ({ pixelIndex, color }) => {
+        const newGrid = [...grid];
+        newGrid[pixelIndex] = color;
+        setGrid(newGrid);
+      });
+
+      socket.on("requestGridState", () => {
+        socket.emit("gridState", { roomCode, grid });
+      });
+
+      socket.on("gridState", (receivedGrid) => {
+        setGrid(receivedGrid);
+      });
+    }
+  }, [socket, grid, roomCode]);
 
   const handleStopClick = () => {
     if (playClicked === true) {
@@ -152,6 +199,15 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     console.log("Color selected:", color);
   };
 
+  // const handlePixelClick = (index) => {
+  //   const newGrid = [...grid];
+  //   const prevColor = newGrid[index];
+  //   newGrid[index] = currentColor;
+  //   setGrid(newGrid);
+  //   setUndoStack([...undoStack, { pixelIndex: index, color: prevColor }]);
+  //   setRedoStack([]);
+  // };
+
   const handlePixelClick = (index) => {
     const newGrid = [...grid];
     const prevColor = newGrid[index];
@@ -159,6 +215,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     setGrid(newGrid);
     setUndoStack([...undoStack, { pixelIndex: index, color: prevColor }]);
     setRedoStack([]);
+    socket.emit("pixelUpdate", { roomCode, pixelIndex: index, color: currentColor });
   };
 
   const handleUndo = () => {
@@ -237,7 +294,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const handleLoad = () => {
     if (loggedIn && userId) {
       setShowComponent("load");
-    } else if (showComponent != "grid") {
+    } else if (showComponent !== "grid") {
       setShowComponent("grid");
     }
   };

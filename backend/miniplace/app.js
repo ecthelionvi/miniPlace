@@ -3,13 +3,14 @@ const sqlite3 = require("sqlite3").verbose();
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const cors = require("cors");
+const { socketServer } = require("./socket");
 
 const app = express();
 // app.use(bodyParser.json());
 const port = 8000;
 app.use(
   cors({
-    origin: "http://localhost:3000", // Replace with your frontend domain
+    origin: "http://localhost:8000",
   }),
   bodyParser.json(),
 );
@@ -170,9 +171,14 @@ app.delete("/grid-designs/:userId/:id", (req, res) => {
     }
   });
 });
+
 // Start the server
 app.listen(8000, () => {
   console.log("Server is running on port 8000");
+});
+
+socketServer.listen(8001, () => {
+  console.log("Socket.IO server running on port 8001");
 });
 
 // Close the database connection when the server is terminated
