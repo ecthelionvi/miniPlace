@@ -74,9 +74,11 @@
 #recButton {
   width: 48px;
   height: auto;
-  cursor: pointer;
   animation: flash 2s infinite;
   z-index: 10;
+  margin-right: 10px;
+  -webkit-filter: drop-shadow(2px 2px 5px #222);
+  filter: drop-shadow(2px 2px 2px #222);
 }
 
 #playButton {
@@ -84,6 +86,9 @@
   height: auto;
   cursor: pointer;
   z-index: 10;
+  margin-right: 10px;
+  -webkit-filter: drop-shadow(2px 2px 5px #222);
+  filter: drop-shadow(2px 2px 2px #222);
 }
 
 #stopButton {
@@ -91,6 +96,9 @@
   height: auto;
   cursor: pointer;
   z-index: 10;
+  margin-right: 10px;
+  -webkit-filter: drop-shadow(2px 2px 5px #222);
+  filter: drop-shadow(2px 2px 2px #222);
 }
 
 #joinButton {
@@ -98,6 +106,16 @@
   height: auto;
   cursor: pointer;
   z-index: 10;
+  margin-right: 10px;
+  -webkit-filter: drop-shadow(2px 2px 5px #222);
+  filter: drop-shadow(2px 2px 2px #222);
+}
+
+#joinButton:hover,
+#playButton:hover,
+#stopButton:hover {
+  opacity: 1;
+  filter: drop-shadow(5px 5px 5px #222) brightness(0.9) sepia(2) hue-rotate(0deg) saturate(5);
 }
 
 #twitterButton {

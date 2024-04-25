@@ -18,7 +18,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [grid, setGrid] = useState([]);
   const [undoStack, setUndoStack] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
-  const [multiplayerClick, setMultiplayerClick] = useState(false);
   const [showComponent, setShowComponent] = useState("grid");
   const [currentColor, setCurrentColor] = useState("#000000");
   const [pickerColor, setPickerColor] = useState("#FFC0CB");
@@ -28,12 +27,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   useEffect(() => {
     createGrid(30);
   }, []);
-
-  const handleMultiplayerClick = () => {
-    setMultiplayerClick((prevState) => {
-      return !prevState;
-    });
-  };
 
   const handleLogoutGrid = () => {
     handleLogout();
@@ -226,7 +219,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         loggedIn={loggedIn}
         handleGalleryClick={handleGalleryClick}
         handleHomeClick={handleHomeClick}
-        handleMultiplayerClick={handleMultiplayerClick}
       />
       <div
         id="mainContainer"
@@ -238,10 +230,14 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         }}
       >
         <div id="buttonContainer">
-          <img src={RecButton} alt="Record Button" />
-          <img src={PlayButton} alt="Play Button" />
-          <img src={StopButton} alt="Stop Button" />
-          <img src={JoinButton} alt="Join Button" />
+          {showComponent === "grid" ? (
+            <>
+              <img src={RecButton} alt="Record Button" id="recButton" />
+              <img src={PlayButton} alt="Play Button" id="playButton" />
+              <img src={StopButton} alt="Stop Button" id="stopButton" />
+              <img src={JoinButton} alt="Join Button" id="joinButton" />
+            </>
+          ) : null}
         </div>
         <div id="gridContainer">
           {showComponent === "grid" ? (
