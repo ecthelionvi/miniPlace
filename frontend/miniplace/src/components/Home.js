@@ -13,20 +13,45 @@ import RecButton from "../images/rec-button.png";
 import StopButton from "../images/stop-button.png";
 import PlayButton from "../images/play.png";
 import JoinButton from "../images/join.png";
+import RoomCodePopup from "../components/RoomCodePopup";
 
 const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [grid, setGrid] = useState([]);
   const [undoStack, setUndoStack] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
+  const [playClicked, setPlayClicked] = useState(false);
   const [showComponent, setShowComponent] = useState("grid");
   const [currentColor, setCurrentColor] = useState("#000000");
   const [pickerColor, setPickerColor] = useState("#FFC0CB");
   const [activeTool, setActiveTool] = useState("colorBlock");
   const [lastPickerColor, setLastPickerColor] = useState("#FFC0CB");
+  const [showRoomCodePopup, setShowRoomCodePopup] = useState(false);
 
   useEffect(() => {
     createGrid(30);
   }, []);
+
+  const handleJoinButtonClick = () => {
+    setShowRoomCodePopup(true);
+  };
+
+  const handleJoinRoom = (roomCode) => {
+    console.log("Joining room with code:", roomCode);
+    setShowRoomCodePopup(false);
+  };
+
+  const handlePlayClick = () => {
+    if (playClicked === true) {
+    } else {
+      setPlayClicked(!playClicked);
+    }
+  };
+
+  const handleStopClick = () => {
+    if (playClicked === true) {
+      setPlayClicked(!playClicked);
+    }
+  };
 
   const handleLogoutGrid = () => {
     handleLogout();
@@ -232,13 +257,30 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         <div id="buttonContainer">
           {showComponent === "grid" ? (
             <>
-              <img src={RecButton} alt="Record Button" id="recButton" />
-              <img src={PlayButton} alt="Play Button" id="playButton" />
-              <img src={StopButton} alt="Stop Button" id="stopButton" />
-              <img src={JoinButton} alt="Join Button" id="joinButton" />
+              {playClicked ? <img src={RecButton} alt="Record Button" id="recButton" /> : null}
+              <div className="tooltip-button">
+                <img src={PlayButton} alt="Play Button" id="playButton" onClick={handlePlayClick} />
+                <span className="tooltiptext-button">Play</span>
+              </div>
+              <div className="tooltip-button">
+                <img src={StopButton} alt="Stop Button" id="stopButton" onClick={handleStopClick} />
+                <span className="tooltiptext-button">Stop</span>
+              </div>
+              <div className="tooltip-button">
+                <img
+                  src={JoinButton}
+                  alt="Join Button"
+                  id="joinButton"
+                  onClick={handleJoinButtonClick}
+                />
+                <span className="tooltiptext-button">Join</span>
+              </div>
             </>
           ) : null}
         </div>
+        {showRoomCodePopup && (
+          <RoomCodePopup onJoinRoom={handleJoinRoom} onClose={() => setShowRoomCodePopup(false)} />
+        )}
         <div id="gridContainer">
           {showComponent === "grid" ? (
             <>

@@ -34,7 +34,7 @@ const LoginPage = ({ onLogin }) => {
       </div>
       <div className="login-form-wrapper">
         <div className="login-form-content">
-          <img src={logo} alt="Mo's Drones Logo" className="login-form-logo" />
+          <img src={logo} alt="miniPlace Logo" className="login-form-logo" />
           <h2 className="login-form-title">Sign In</h2>
           <form onSubmit={handleSubmit} className="login-form">
             <div className="login-form-group">
