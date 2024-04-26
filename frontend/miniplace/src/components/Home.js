@@ -246,6 +246,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const handleLogoutGrid = () => {
     handleLogout();
     createGrid(30);
+    setGridId(null);
   };
 
   const handleGalleryClick = () => {
