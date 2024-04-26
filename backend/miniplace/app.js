@@ -91,35 +91,42 @@ app.post("/login", (req, res) => {
 
 app.post("/save-grid-design", upload.single("screenshot"), (req, res) => {
   const userId = req.body.userId;
+  const gridId = req.body.gridId; // Optional gridId parameter
   const gridData = JSON.stringify(req.body.gridData);
   const screenshotBlob = req.file.buffer;
 
-  db.get(
-    `SELECT * FROM grid_designs WHERE user_id = ? AND grid_data = ?`,
-    [userId, gridData],
-    (err, row) => {
-      if (err) {
-        console.error(err);
-        res.status(500).json({ error: "Internal server error" });
-      } else if (row) {
-        res.status(400).json({ error: "Duplicate grid design" });
-      } else {
-        db.run(
-          `INSERT INTO grid_designs (user_id, screenshot, grid_data) VALUES (?, ?, ?)`,
-          [userId, screenshotBlob, gridData],
-          function (err) {
-            if (err) {
-              console.error(err);
-              res.status(500).json({ error: "Internal server error" });
-            } else {
-              const gridId = this.lastID;
-              res.status(200).json({ message: "Grid design saved successfully", gridId });
-            }
-          },
-        );
-      }
-    },
-  );
+  if (gridId) {
+    // Update existing grid design
+    db.run(
+      `UPDATE grid_designs SET screenshot = ?, grid_data = ? WHERE id = ? AND user_id = ?`,
+      [screenshotBlob, gridData, gridId, userId],
+      function (err) {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ error: "Internal server error" });
+        } else if (this.changes === 0) {
+          res.status(404).json({ error: "Grid design not found" });
+        } else {
+          res.status(200).json({ message: "Grid design updated successfully", gridId });
+        }
+      },
+    );
+  } else {
+    // Create new grid design
+    db.run(
+      `INSERT INTO grid_designs (user_id, screenshot, grid_data) VALUES (?, ?, ?)`,
+      [userId, screenshotBlob, gridData],
+      function (err) {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ error: "Internal server error" });
+        } else {
+          const newGridId = this.lastID;
+          res.status(200).json({ message: "Grid design saved successfully", gridId: newGridId });
+        }
+      },
+    );
+  }
 });
 
 app.get("/all-grid-designs", (req, res) => {

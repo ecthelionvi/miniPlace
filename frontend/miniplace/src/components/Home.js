@@ -83,7 +83,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       setCurrentColor(currentColor);
     } else if (previousColor === pickerColor) {
       setActiveTool("colorPicker");
-      setCurrentColor(previousColor);
+      setCurrentColor(pickerColor);
     } else {
       setActiveTool("colorBlock");
       setCurrentColor(previousColor);
@@ -391,6 +391,10 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
           formData.append("screenshot", blob, "screenshot.png");
           formData.append("userId", userId);
           formData.append("gridData", JSON.stringify(gridData));
+
+          if (gridId) {
+            formData.append("gridId", gridId);
+          }
 
           fetch("http://localhost:8000/save-grid-design", {
             method: "POST",
