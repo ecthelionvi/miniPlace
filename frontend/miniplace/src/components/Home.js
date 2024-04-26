@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import html2canvas from "html2canvas";
 import Grid from "../components/Grid";
 import footer from "../images/footer.png";
-import reddit from "../images/reddit.png";
+// import reddit from "../images/reddit.png";
 import Menubar from "../components/MenuBar";
 import twitter from "../images/twitter.png";
 import React, { useState, useEffect } from "react";
@@ -259,6 +259,14 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         ...redoStack,
         { pixelIndex: lastAction.pixelIndex, color: grid[lastAction.pixelIndex] },
       ]);
+
+      if (socket) {
+        socket.emit("pixelUpdate", {
+          roomCode,
+          pixelIndex: lastAction.pixelIndex,
+          color: lastAction.color,
+        });
+      }
     } else {
       setShowComponent("grid");
     }
@@ -275,11 +283,18 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         ...undoStack,
         { pixelIndex: lastUndo.pixelIndex, color: grid[lastUndo.pixelIndex] },
       ]);
+
+      if (socket) {
+        socket.emit("pixelUpdate", {
+          roomCode,
+          pixelIndex: lastUndo.pixelIndex,
+          color: lastUndo.color,
+        });
+      }
     } else {
       setShowComponent("grid");
     }
   };
-
   const handleSave = () => {
     if (loggedIn && userId && showComponent === "grid") {
       const isAllWhite = grid.every((color) => color === "#ffffff");
@@ -375,12 +390,12 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     window.open(twitterUrl, "_blank");
   };
 
-  const handleRedditShare = () => {
-    const pageUrl = "https://miniplace.net";
-    const title = encodeURIComponent(document.title);
-    const redditUrl = `https://reddit.com/submit?url=${pageUrl}&title=${title}`;
-    window.open(redditUrl, "_blank");
-  };
+  // const handleRedditShare = () => {
+  //   const pageUrl = "https://miniplace.net";
+  //   const title = encodeURIComponent(document.title);
+  //   const redditUrl = `https://reddit.com/submit?url=${pageUrl}&title=${title}`;
+  //   window.open(redditUrl, "_blank");
+  // };
 
   const createGrid = (size) => {
     const newGrid = Array(size * size).fill("#ffffff");
@@ -403,6 +418,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         handleGalleryClick={handleGalleryClick}
         handleHomeClick={handleHomeClick}
         handleTrashClick={handleTrashClick}
+        handleTwitterShare={handleTwitterShare}
       />
       <div
         id="mainContainer"
@@ -472,8 +488,8 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
           )}
         </div>
       </div>
-      <img src={twitter} alt="Twitter" id="twitterButton" onClick={handleTwitterShare} />
-      <img src={reddit} alt="Reddit" id="redditButton" onClick={handleRedditShare} />
+      {/* <img src={twitter} alt="Twitter" id="twitterButton" onClick={handleTwitterShare} /> */}
+      {/* <img src={reddit} alt="Reddit" id="redditButton" onClick={handleRedditShare} /> */}
     </div>
   );
 };

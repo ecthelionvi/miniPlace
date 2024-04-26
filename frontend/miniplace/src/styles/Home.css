@@ -180,9 +180,10 @@
   width: 420px;
   height: auto;
   margin-bottom: -10px;
+  margin-right: 8px;
 }
 
-@media (max-width: 1209px) {
+@media (max-width: 1293px) {
   :root {
     --grid-size: 18px;
   }
@@ -190,13 +191,6 @@
   #navbarLogo {
     margin-bottom: 10px;
   }
-}
-
-@media (max-width: 915px) {
-  /* #clickText, */
-  /* #footerText { */
-  /*   width: 50vw; */
-  /* } */
 }
 
 @media (max-width: 480px) {

@@ -36,6 +36,15 @@
   padding: 10px 0;
 }
 
+#shareGrid {
+  width: 72px;
+  height: auto;
+  cursor: pointer;
+  margin-bottom: 2px;
+  margin-left: -5px;
+  margin-right: 5px;
+}
+
 #multiplayerGrid {
   width: 80px;
   height: auto;
@@ -123,7 +132,6 @@
   filter: drop-shadow(5px 5px 5px #222);
 }
 
-
 #homeGrid {
   cursor: pointer;
   transition: opacity 0.3s ease;
@@ -132,15 +140,14 @@
   filter: drop-shadow(5px 5px 5px #222);
 }
 
-
-#downloadGrid {
+#downloadGrid,
+#shareGrid {
   cursor: pointer;
   margin-bottom: 2px;
   transition: opacity 0.3s ease;
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);
 }
-
 
 #multiplayerGrid,
 #downloadGrid,
@@ -172,7 +179,8 @@
 #multiplayerGrid:hover,
 #eraserGrid:hover,
 #signInGrid:hover,
-#signOutGrid:hover {
+#signOutGrid:hover,
+#shareGrid:hover {
   opacity: 1;
   filter: drop-shadow(5px 5px 5px #222) brightness(0.9) sepia(2) hue-rotate(0deg) saturate(5);
 }

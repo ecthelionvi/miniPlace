@@ -13,6 +13,7 @@ import download from "../images/download.png";
 import hardDrive from "../images/hard-drive.png";
 import floppyDisk from "../images/floppy-disk.png";
 import signOut from "../images/sign-out.png";
+import share from "../images/share.png";
 
 const Menubar = ({
   createGrid,
@@ -28,6 +29,7 @@ const Menubar = ({
   handleGalleryClick,
   handleHomeClick,
   handleTrashClick,
+  handleTwitterShare,
 }) => {
   return (
     <header id="menuBarHeader">
@@ -69,6 +71,10 @@ const Menubar = ({
           <div className="tooltip">
             <img src={download} alt="Download" id="downloadGrid" onClick={handleDownload} />
             <span className="tooltiptext-load">Download</span>
+          </div>
+          <div className="tooltip">
+            <img src={share} alt="Share" id="shareGrid" onClick={handleTwitterShare} />
+            <span className="tooltiptext-load">Share</span>
           </div>
           <div className="tooltip">
             {loggedIn ? (
