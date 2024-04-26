@@ -16,6 +16,7 @@ import LoadComponent from "../components/LoadComponent";
 import RoomCodePopup from "../components/RoomCodePopup";
 import GalleryComponent from "../components/GalleryComponent";
 import NewPopup from "../components/NewPopup";
+import SavePopup from "../components/SavePopup";
 
 const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [grid, setGrid] = useState([]);
@@ -34,6 +35,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [previousColor, setPreviousColor] = useState("#ffffff");
   const [showTrashPopup, setShowTrashPopup] = useState(false);
   const [showNewPopup, setShowNewPopup] = useState(false);
+  const [showSavePopup, setShowSavePopup] = useState(false);
 
   useEffect(() => {
     createGrid(30);
@@ -406,7 +408,12 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
               if (data.gridId) {
                 setGridId(data.gridId);
               }
-              alert("Design Saved Successfully.");
+              if (
+                data.message === "Grid design saved successfully" ||
+                data.message === "Grid design updated successfully"
+              ) {
+                handleSavePopup();
+              }
             })
             .catch((error) => {
               console.error("Error saving grid design:", error);
@@ -418,6 +425,10 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       console.log("User not logged in. Cannot save grid design.");
     }
   };
+  const handleSavePopup = () => {
+    setShowSavePopup(true);
+  };
+
   const handleLoad = () => {
     if (loggedIn && userId) {
       setShowComponent("load");
@@ -543,6 +554,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
           <TrashPopup onConfirm={handleDeleteConfirm} onClose={handleDeleteCancel} />
         )}
         {showNewPopup && <NewPopup onConfirm={handleNewConfirm} onClose={handleNewCancel} />}
+        {showSavePopup && <SavePopup onClose={() => setShowSavePopup(false)} />}
         <div id="gridContainer">
           {showComponent === "grid" ? (
             <>

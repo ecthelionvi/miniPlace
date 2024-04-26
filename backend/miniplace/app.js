@@ -96,23 +96,39 @@ app.post("/save-grid-design", upload.single("screenshot"), (req, res) => {
   const screenshotBlob = req.file.buffer;
 
   if (gridId) {
-    // Update existing grid design
-    db.run(
-      `UPDATE grid_designs SET screenshot = ?, grid_data = ? WHERE id = ? AND user_id = ?`,
-      [screenshotBlob, gridData, gridId, userId],
-      function (err) {
+    db.get(
+      `SELECT grid_data FROM grid_designs WHERE id = ? AND user_id = ?`,
+      [gridId, userId],
+      (err, row) => {
         if (err) {
           console.error(err);
           res.status(500).json({ error: "Internal server error" });
-        } else if (this.changes === 0) {
-          res.status(404).json({ error: "Grid design not found" });
+        } else if (row) {
+          const existingGridData = row.grid_data;
+          if (existingGridData === gridData) {
+            res.status(200).json({ message: "Grid design unchanged", gridId });
+          } else {
+            db.run(
+              `UPDATE grid_designs SET screenshot = ?, grid_data = ? WHERE id = ? AND user_id = ?`,
+              [screenshotBlob, gridData, gridId, userId],
+              function (err) {
+                if (err) {
+                  console.error(err);
+                  res.status(500).json({ error: "Internal server error" });
+                } else if (this.changes === 0) {
+                  res.status(404).json({ error: "Grid design not found" });
+                } else {
+                  res.status(200).json({ message: "Grid design updated successfully", gridId });
+                }
+              },
+            );
+          }
         } else {
-          res.status(200).json({ message: "Grid design updated successfully", gridId });
+          res.status(404).json({ error: "Grid design not found" });
         }
       },
     );
   } else {
-    // Create new grid design
     db.run(
       `INSERT INTO grid_designs (user_id, screenshot, grid_data) VALUES (?, ?, ?)`,
       [userId, screenshotBlob, gridData],
