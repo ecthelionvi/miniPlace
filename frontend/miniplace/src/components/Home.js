@@ -47,7 +47,8 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   }, []);
 
   const handleTrashClick = () => {
-    if (showComponent === "grid") {
+    const isAllWhite = grid.every((color) => color === "#ffffff");
+    if ((showComponent === "grid" && !isAllWhite) || gridId) {
       setShowTrashPopup(true);
     } else {
       setShowComponent("grid");
