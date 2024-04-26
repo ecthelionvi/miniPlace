@@ -59,6 +59,34 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     }
   };
 
+  const handleNewClick = () => {
+    const isAllWhite = grid.every((color) => color === "#ffffff");
+    if (!isAllWhite) {
+      if (showComponent === "grid") {
+        setGridId(null);
+        createGrid(30);
+        if (currentColor === pickerColor) {
+          setActiveTool("colorPicker");
+          setCurrentColor(pickerColor);
+        } else {
+          setActiveTool("colorBlock");
+          setCurrentColor(previousColor);
+        }
+      } else {
+        if (currentColor === pickerColor) {
+          setActiveTool("colorPicker");
+          setCurrentColor(pickerColor);
+        } else {
+          setActiveTool("colorBlock");
+          setCurrentColor(previousColor);
+        }
+        setShowComponent("grid");
+        setGridId(null);
+        createGrid(30);
+      }
+    }
+  };
+
   const handleDeleteConfirm = () => {
     if (gridId && userId) {
       fetch(`http://localhost:8000/grid-designs/${userId}/${gridId}`, {
@@ -447,6 +475,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         handleHomeClick={handleHomeClick}
         handleTrashClick={handleTrashClick}
         handleTwitterShare={handleTwitterShare}
+        handleNewClick={handleNewClick}
       />
       <div
         id="mainContainer"

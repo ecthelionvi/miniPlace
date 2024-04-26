@@ -14,6 +14,7 @@ import hardDrive from "../images/hard-drive.png";
 import floppyDisk from "../images/floppy-disk.png";
 import signOut from "../images/sign-out.png";
 import share from "../images/share.png";
+import pencil from "../images/pencil.png";
 
 const Menubar = ({
   createGrid,
@@ -30,6 +31,7 @@ const Menubar = ({
   handleHomeClick,
   handleTrashClick,
   handleTwitterShare,
+  handleNewClick,
 }) => {
   return (
     <header id="menuBarHeader">
@@ -45,12 +47,16 @@ const Menubar = ({
             <span className="tooltiptext">Gallery</span>
           </div>
           <div className="tooltip">
-            <img src={trash} alt="Reset" id="resetGrid" onClick={handleTrashClick} />
-            <span className="tooltiptext">Trash</span>
+            <img src={pencil} alt="pencil" id="pencilGrid" onClick={handleNewClick} />
+            <span className="tooltiptext">New</span>
           </div>
           <div className="tooltip">
             <img src={eraser} alt="Eraser" id="eraserGrid" onClick={handleEraserClick} />
             <span className="tooltiptext">Eraser</span>
+          </div>
+          <div className="tooltip">
+            <img src={trash} alt="Reset" id="resetGrid" onClick={handleTrashClick} />
+            <span className="tooltiptext">Trash</span>
           </div>
           <div className="tooltip">
             <img src={unDo} alt="Reset" id="undoGrid" onClick={handleUndo} />

@@ -91,6 +91,14 @@
   margin-right: 5px;
 }
 
+#pencilGrid {
+  width: 73px;
+  height: auto;
+  /* margin-right: 2px; */
+  margin-bottom: 3px;
+  margin-left: 4px;
+}
+
 #signInGrid {
   width: 80px;
   height: auto;
@@ -128,6 +136,15 @@
   cursor: pointer;
   transition: opacity 0.3s ease;
   margin: 0px 5px;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+}
+
+
+#pencilGrid {
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  /* margin: 2px 5px; */
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);
 }
@@ -180,7 +197,8 @@
 #eraserGrid:hover,
 #signInGrid:hover,
 #signOutGrid:hover,
-#shareGrid:hover {
+#shareGrid:hover,
+#pencilGrid:hover {
   opacity: 1;
   filter: drop-shadow(5px 5px 5px #222) brightness(0.9) sepia(2) hue-rotate(0deg) saturate(5);
 }
