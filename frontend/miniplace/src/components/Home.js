@@ -17,6 +17,7 @@ import RoomCodePopup from "../components/RoomCodePopup";
 import GalleryComponent from "../components/GalleryComponent";
 import NewPopup from "../components/NewPopup";
 import SavePopup from "../components/SavePopup";
+import ClipboardPopup from "../components/ClipboardPopup";
 
 const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [grid, setGrid] = useState([]);
@@ -36,6 +37,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [showTrashPopup, setShowTrashPopup] = useState(false);
   const [showNewPopup, setShowNewPopup] = useState(false);
   const [showSavePopup, setShowSavePopup] = useState(false);
+  const [showClipboardPopup, setShowClipboardPopup] = useState(false);
 
   useEffect(() => {
     createGrid(30);
@@ -137,7 +139,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     navigator.clipboard
       .writeText(roomCode)
       .then(() => {
-        alert("Room code copied to clipboard.");
+        handleClipboardPopup();
         console.log("Room code copied to clipboard");
       })
       .catch((error) => {
@@ -429,6 +431,10 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     setShowSavePopup(true);
   };
 
+  const handleClipboardPopup = () => {
+    setShowClipboardPopup(true);
+  };
+
   const handleLoad = () => {
     if (loggedIn && userId) {
       setShowComponent("load");
@@ -555,6 +561,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         )}
         {showNewPopup && <NewPopup onConfirm={handleNewConfirm} onClose={handleNewCancel} />}
         {showSavePopup && <SavePopup onClose={() => setShowSavePopup(false)} />}
+        {showClipboardPopup && <ClipboardPopup onClose={() => setShowClipboardPopup(false)} />}
         <div id="gridContainer">
           {showComponent === "grid" ? (
             <>
