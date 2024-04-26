@@ -80,31 +80,39 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
 
   const handleJoinRoom = (enteredRoomCode, callback) => {
     console.log("Joining room with code:", enteredRoomCode);
+    setRoomCode(enteredRoomCode);
 
-    socket.emit("checkRoomCode", enteredRoomCode, (isValid) => {
-      if (isValid) {
-        setRoomCode(enteredRoomCode);
-        setShowRoomCodePopup(false);
-        socket.emit("joinRoom", enteredRoomCode);
-        socket.emit("requestGridState", enteredRoomCode);
-        setPlayClicked(true);
-      } else {
-        console.log("Invalid room code:", enteredRoomCode);
-        callback(false);
-      }
-    });
+    if (!socket) {
+      const newSocket = io("http://localhost:8001");
+      setSocket(newSocket);
+
+      newSocket.emit("checkRoomCode", enteredRoomCode, (isValid) => {
+        if (isValid) {
+          setRoomCode(enteredRoomCode);
+          setShowRoomCodePopup(false);
+          newSocket.emit("joinRoom", enteredRoomCode);
+          newSocket.emit("requestGridState", enteredRoomCode);
+          setPlayClicked(true);
+        } else {
+          console.log("Invalid room code:", enteredRoomCode);
+          callback(false);
+        }
+      });
+    } else {
+      socket.emit("checkRoomCode", enteredRoomCode, (isValid) => {
+        if (isValid) {
+          setRoomCode(enteredRoomCode);
+          setShowRoomCodePopup(false);
+          socket.emit("joinRoom", enteredRoomCode);
+          socket.emit("requestGridState", enteredRoomCode);
+          setPlayClicked(true);
+        } else {
+          console.log("Invalid room code:", enteredRoomCode);
+          callback(false);
+        }
+      });
+    }
   };
-  // const handlePlayClick = () => {
-  //   if (playClicked === true) {
-  //     setPlayClicked(!playClicked);
-  //     setRoomCode("");
-  //   } else {
-  //     setPlayClicked(!playClicked);
-  //     const newRoomCode = uuidv4().slice(0, 8);
-  //     setRoomCode(newRoomCode);
-  //     console.log("Room Code:", newRoomCode);
-  //   }
-  // };
 
   const handlePlayClick = () => {
     if (playClicked === true) {
@@ -145,7 +153,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
 
       socket.on("activeRoomCodes", (roomCodes) => {
         console.log("Active Room Codes:", roomCodes);
-        // You can update your UI or perform any other actions with the active room codes
       });
 
       return () => {
@@ -156,11 +163,13 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       };
     }
   }, [socket, grid, roomCode]);
+
   const handleStopClick = () => {
     if (socket) {
       setRoomCode("");
       setPlayClicked(false);
       socket.disconnect();
+      setSocket(null);
       console.log("Socket disconnected");
     } else if (playClicked === true) {
       setPlayClicked(false);
@@ -331,6 +340,10 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
             setUndoStack(gridData.undoStack);
             setRedoStack(gridData.redoStack);
             setShowComponent("grid");
+
+            if (socket) {
+              socket.emit("gridState", { roomCode, grid: gridData.grid });
+            }
           } else {
             console.log("Grid design not found.");
           }
@@ -342,7 +355,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       console.log("User not logged in. Cannot load grid design.");
     }
   };
-
   const handleDownload = () => {
     if (showComponent === "grid") {
       html2canvas(document.getElementById("grid")).then((canvas) => {
