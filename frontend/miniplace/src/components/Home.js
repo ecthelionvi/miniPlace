@@ -4,21 +4,21 @@ import { v4 as uuidv4 } from "uuid";
 import html2canvas from "html2canvas";
 import Grid from "../components/Grid";
 import footer from "../images/footer.png";
-// import reddit from "../images/reddit.png";
 import Menubar from "../components/MenuBar";
-import twitter from "../images/twitter.png";
+import PlayButton from "../images/play.png";
+import JoinButton from "../images/join.png";
+import RecButton from "../images/rec-button.png";
+import TrashPopup from "../components/TrashPopup";
+import StopButton from "../images/stop-button.png";
 import React, { useState, useEffect } from "react";
 import ColorPalette from "../components/ColorPalette";
 import LoadComponent from "../components/LoadComponent";
-import GalleryComponent from "../components/GalleryComponent";
-import RecButton from "../images/rec-button.png";
-import StopButton from "../images/stop-button.png";
-import PlayButton from "../images/play.png";
-import JoinButton from "../images/join.png";
 import RoomCodePopup from "../components/RoomCodePopup";
+import GalleryComponent from "../components/GalleryComponent";
 
 const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [grid, setGrid] = useState([]);
+  const [gridId, setGridId] = useState(null);
   const [undoStack, setUndoStack] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
   const [socket, setSocket] = useState(null);
@@ -31,6 +31,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [lastPickerColor, setLastPickerColor] = useState("#FFC0CB");
   const [showRoomCodePopup, setShowRoomCodePopup] = useState(false);
   const [previousColor, setPreviousColor] = useState("#ffffff");
+  const [showTrashPopup, setShowTrashPopup] = useState(false);
 
   useEffect(() => {
     createGrid(30);
@@ -47,7 +48,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
 
   const handleTrashClick = () => {
     if (showComponent === "grid") {
-      createGrid(30);
+      setShowTrashPopup(true);
     } else {
       setShowComponent("grid");
       setActiveTool("colorBlock");
@@ -55,6 +56,28 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         setActiveTool("colorPicker");
       }
     }
+  };
+
+  const handleDeleteConfirm = () => {
+    if (gridId && userId) {
+      fetch(`http://localhost:8000/grid-designs/${userId}/${gridId}`, {
+        method: "DELETE",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.message);
+          createGrid(30);
+          setShowTrashPopup(false);
+          setGridId(null);
+        })
+        .catch((error) => {
+          console.error("Error deleting grid design:", error);
+        });
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setShowTrashPopup(false);
   };
 
   const handleCopyRoomCode = () => {
@@ -349,6 +372,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
 
   const handleLoadGrid = (gridId) => {
     if (userId) {
+      setGridId(gridId);
       fetch(`http://localhost:8000/grid-designs/${userId}/${gridId}`)
         .then((response) => response.json())
         .then((data) => {
@@ -457,6 +481,9 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         </div>
         {showRoomCodePopup && (
           <RoomCodePopup onJoinRoom={handleJoinRoom} onClose={() => setShowRoomCodePopup(false)} />
+        )}
+        {showTrashPopup && (
+          <TrashPopup onConfirm={handleDeleteConfirm} onClose={handleDeleteCancel} />
         )}
         <div id="gridContainer">
           {showComponent === "grid" ? (

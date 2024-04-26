@@ -6,7 +6,6 @@ const cors = require("cors");
 const { socketServer } = require("./socket");
 
 const app = express();
-// app.use(bodyParser.json());
 const port = 8000;
 app.use(
   cors({
@@ -14,20 +13,17 @@ app.use(
   }),
   bodyParser.json(),
 );
-// Set up multer for handling file uploads
+
 const upload = multer({ storage: multer.memoryStorage() });
 
-// Connect to the SQLite database
 const db = new sqlite3.Database("database/database.db");
 
-// Create the users table if it doesn't exist
 db.run(`CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   email TEXT UNIQUE,
   password TEXT
 )`);
 
-// Create the grid_designs table if it doesn't exist
 db.run(`CREATE TABLE IF NOT EXISTS grid_designs (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER,
@@ -38,7 +34,6 @@ db.run(`CREATE TABLE IF NOT EXISTS grid_designs (
   FOREIGN KEY (user_id) REFERENCES users (id)
 )`);
 
-// User registration endpoint
 app.post("/register", (req, res) => {
   const { email, password } = req.body;
 
@@ -52,7 +47,6 @@ app.post("/register", (req, res) => {
   });
 });
 
-// User login endpoint
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
 
@@ -68,13 +62,11 @@ app.post("/login", (req, res) => {
   });
 });
 
-// Endpoint for saving grid design
 app.post("/save-grid-design", upload.single("screenshot"), (req, res) => {
   const userId = req.body.userId;
   const gridData = JSON.stringify(req.body.gridData);
   const screenshotBlob = req.file.buffer;
 
-  // Check if the grid data matches any existing grid designs for the user
   db.get(
     `SELECT * FROM grid_designs WHERE user_id = ? AND grid_data = ?`,
     [userId, gridData],
@@ -85,7 +77,6 @@ app.post("/save-grid-design", upload.single("screenshot"), (req, res) => {
       } else if (row) {
         res.status(400).json({ error: "Duplicate grid design" });
       } else {
-        // If no duplicate found, insert the new grid design
         db.run(
           `INSERT INTO grid_designs (user_id, screenshot, grid_data) VALUES (?, ?, ?)`,
           [userId, screenshotBlob, gridData],
@@ -102,7 +93,7 @@ app.post("/save-grid-design", upload.single("screenshot"), (req, res) => {
     },
   );
 });
-// Endpoint for retrieving all grid images for every user
+
 app.get("/all-grid-designs", (req, res) => {
   db.all(`SELECT * FROM grid_designs`, (err, rows) => {
     if (err) {
@@ -119,7 +110,6 @@ app.get("/all-grid-designs", (req, res) => {
   });
 });
 
-// Endpoint for retrieving all grid designs for a specific user
 app.get("/grid-designs/:userId", (req, res) => {
   const userId = req.params.userId;
 
@@ -172,7 +162,6 @@ app.delete("/grid-designs/:userId/:id", (req, res) => {
   });
 });
 
-// Start the server
 app.listen(8000, () => {
   console.log("Server is running on port 8000");
 });
@@ -181,7 +170,6 @@ socketServer.listen(8001, () => {
   console.log("Socket.IO server running on port 8001");
 });
 
-// Close the database connection when the server is terminated
 process.on("SIGINT", () => {
   db.close((err) => {
     if (err) {
