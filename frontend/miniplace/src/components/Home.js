@@ -73,6 +73,9 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         .catch((error) => {
           console.error("Error deleting grid design:", error);
         });
+    } else {
+      createGrid(30);
+      setShowTrashPopup(false);
     }
   };
 
