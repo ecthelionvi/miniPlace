@@ -30,6 +30,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
   height: 50px;
   margin-top: 16px;
   margin-bottom: 12px;
@@ -74,17 +75,18 @@
 }
 
 #recButton {
-  width: 48px;
+  width: 50px;
   height: auto;
   animation: flash 2s infinite;
   z-index: 10;
   margin-right: 10px;
+  margin-bottom: 5px;
   -webkit-filter: drop-shadow(2px 2px 5px #222);
   filter: drop-shadow(2px 2px 2px #222);
 }
 
 #playButton {
-  width: 48px;
+  width: 51px;
   height: auto;
   cursor: pointer;
   z-index: 10;
@@ -94,7 +96,7 @@
 }
 
 #stopButton {
-  width: 48px;
+  width: 49px;
   height: auto;
   cursor: pointer;
   z-index: 10;
@@ -104,7 +106,7 @@
 }
 
 #joinButton {
-  width: 48px;
+  width: 49px;
   height: auto;
   cursor: pointer;
   z-index: 10;
