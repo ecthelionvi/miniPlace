@@ -15,6 +15,7 @@ import ColorPalette from "../components/ColorPalette";
 import LoadComponent from "../components/LoadComponent";
 import RoomCodePopup from "../components/RoomCodePopup";
 import GalleryComponent from "../components/GalleryComponent";
+import NewPopup from "../components/NewPopup";
 
 const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [grid, setGrid] = useState([]);
@@ -32,6 +33,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [showRoomCodePopup, setShowRoomCodePopup] = useState(false);
   const [previousColor, setPreviousColor] = useState("#ffffff");
   const [showTrashPopup, setShowTrashPopup] = useState(false);
+  const [showNewPopup, setShowNewPopup] = useState(false);
 
   useEffect(() => {
     createGrid(30);
@@ -60,21 +62,42 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   };
 
   const handleNewClick = () => {
-    if (showComponent === "grid") {
-      setGridId(null);
-      createGrid(30);
-      setUndoStack([]);
-      setRedoStack([]);
-      setCurrentColor(activeTool === "colorPicker" ? pickerColor : previousColor);
-    } else {
+    const isAllWhite = grid.every((color) => color === "#ffffff");
+
+    if (showComponent !== "grid") {
       setShowComponent("grid");
-      setGridId(null);
-      createGrid(30);
-      setUndoStack([]);
-      setRedoStack([]);
-      setCurrentColor(activeTool === "colorPicker" ? pickerColor : previousColor);
+      if (!isAllWhite || gridId) {
+        setTimeout(() => {
+          setShowNewPopup(true);
+        }, 300);
+      }
+    } else if (showComponent === "grid" && !isAllWhite) {
+      setShowNewPopup(true);
     }
   };
+
+  const handleNewConfirm = () => {
+    if (previousColor === pickerColor) {
+      setGridId(null);
+      createGrid(30);
+      setUndoStack([]);
+      setRedoStack([]);
+      setActiveTool("colorPicker");
+      setCurrentColor(pickerColor);
+    } else {
+      setGridId(null);
+      createGrid(30);
+      setUndoStack([]);
+      setRedoStack([]);
+      setActiveTool("colorBlock");
+    }
+    setShowNewPopup(false);
+  };
+
+  const handleNewCancel = () => {
+    setShowNewPopup(false);
+  };
+
   const handleDeleteConfirm = () => {
     if (gridId && userId) {
       fetch(`http://localhost:8000/grid-designs/${userId}/${gridId}`, {
@@ -510,6 +533,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         {showTrashPopup && (
           <TrashPopup onConfirm={handleDeleteConfirm} onClose={handleDeleteCancel} />
         )}
+        {showNewPopup && <NewPopup onConfirm={handleNewConfirm} onClose={handleNewCancel} />}
         <div id="gridContainer">
           {showComponent === "grid" ? (
             <>
