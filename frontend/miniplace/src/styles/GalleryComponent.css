@@ -2,22 +2,22 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .gallery-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   max-width: 80vw;
-  max-height: 80vh;
   margin: 0 auto;
+  padding-bottom: 50px;
 }
 
 .gallery-container img {
-  width: 210px;
+  width: 256px;
   height: auto;
   margin: 10px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -29,13 +29,13 @@
 }
 
 .gallery-text {
-  margin-bottom: 36px;
+  margin-bottom: 28px;
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);
 }
 
 .gallery-text-load {
-  margin-bottom: 42px;
+  margin-bottom: 36px;
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);
 }
