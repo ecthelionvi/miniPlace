@@ -74,23 +74,28 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     } else if (showComponent === "grid" && !isAllWhite) {
       setShowNewPopup(true);
     }
+
+    if (previousColor === pickerColor) {
+      setActiveTool("colorPicker");
+      setCurrentColor(pickerColor);
+      if (currentColor === pickerColor) {
+        setActiveTool("colorPicker");
+        setCurrentColor(previousColor);
+      }
+    } else if (currentColor !== "#ffffff") {
+      setActiveTool("colorBlock");
+      setCurrentColor(currentColor);
+    } else {
+      setActiveTool("colorBlock");
+      setCurrentColor(previousColor);
+    }
   };
 
   const handleNewConfirm = () => {
-    if (previousColor === pickerColor) {
-      setGridId(null);
-      createGrid(30);
-      setUndoStack([]);
-      setRedoStack([]);
-      setActiveTool("colorPicker");
-      setCurrentColor(pickerColor);
-    } else {
-      setGridId(null);
-      createGrid(30);
-      setUndoStack([]);
-      setRedoStack([]);
-      setActiveTool("colorBlock");
-    }
+    setGridId(null);
+    createGrid(30);
+    setUndoStack([]);
+    setRedoStack([]);
     setShowNewPopup(false);
   };
 
