@@ -118,10 +118,29 @@
 #twitterButton {
   cursor: pointer;
   transition: opacity 0.3s ease;
-  margin: -2px 5px;
+  margin: 0px 5px;
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);
 }
+
+
+#homeGrid {
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  margin: 2px 5px;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+}
+
+
+#downloadGrid {
+  cursor: pointer;
+  margin-bottom: 2px;
+  transition: opacity 0.3s ease;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+}
+
 
 #multiplayerGrid,
 #downloadGrid,
@@ -132,6 +151,7 @@
 #galleryGrid,
 #eraserGrid {
   cursor: pointer;
+  margin-bottom: 2px;
   transition: opacity 0.3s ease;
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);

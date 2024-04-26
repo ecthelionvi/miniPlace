@@ -191,10 +191,10 @@
 }
 
 @media (max-width: 915px) {
-  #clickText,
-  #footerText {
-    width: 50vw;
-  }
+  /* #clickText, */
+  /* #footerText { */
+  /*   width: 50vw; */
+  /* } */
 }
 
 @media (max-width: 480px) {
