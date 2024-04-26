@@ -75,16 +75,15 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       setShowNewPopup(true);
     }
 
-    if (previousColor === pickerColor) {
+    if (currentColor === pickerColor) {
       setActiveTool("colorPicker");
       setCurrentColor(pickerColor);
-      if (currentColor === pickerColor) {
-        setActiveTool("colorPicker");
-        setCurrentColor(previousColor);
-      }
     } else if (currentColor !== "#ffffff") {
       setActiveTool("colorBlock");
       setCurrentColor(currentColor);
+    } else if (previousColor === pickerColor) {
+      setActiveTool("colorPicker");
+      setCurrentColor(previousColor);
     } else {
       setActiveTool("colorBlock");
       setCurrentColor(previousColor);
