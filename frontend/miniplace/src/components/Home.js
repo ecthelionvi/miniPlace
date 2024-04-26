@@ -357,7 +357,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
               if (data.gridId) {
                 setGridId(data.gridId);
               }
-              alert("Grid design saved successfully.");
+              alert("Design Saved Successfully.");
             })
             .catch((error) => {
               console.error("Error saving grid design:", error);
