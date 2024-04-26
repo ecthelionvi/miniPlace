@@ -324,6 +324,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       setShowComponent("grid");
     }
   };
+
   const handleSave = () => {
     if (loggedIn && userId && showComponent === "grid") {
       const isAllWhite = grid.every((color) => color === "#ffffff");
@@ -353,6 +354,10 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
             .then((response) => response.json())
             .then((data) => {
               console.log(data.message);
+              if (data.gridId) {
+                setGridId(data.gridId);
+              }
+              alert("Grid design saved successfully.");
             })
             .catch((error) => {
               console.error("Error saving grid design:", error);
@@ -364,7 +369,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       console.log("User not logged in. Cannot save grid design.");
     }
   };
-
   const handleLoad = () => {
     if (loggedIn && userId) {
       setShowComponent("load");

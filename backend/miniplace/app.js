@@ -80,12 +80,13 @@ app.post("/save-grid-design", upload.single("screenshot"), (req, res) => {
         db.run(
           `INSERT INTO grid_designs (user_id, screenshot, grid_data) VALUES (?, ?, ?)`,
           [userId, screenshotBlob, gridData],
-          (err) => {
+          function (err) {
             if (err) {
               console.error(err);
               res.status(500).json({ error: "Internal server error" });
             } else {
-              res.status(200).json({ message: "Grid design saved successfully" });
+              const gridId = this.lastID;
+              res.status(200).json({ message: "Grid design saved successfully", gridId });
             }
           },
         );
