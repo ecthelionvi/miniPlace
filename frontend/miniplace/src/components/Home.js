@@ -581,8 +581,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
           )}
         </div>
       </div>
-      {/* <img src={twitter} alt="Twitter" id="twitterButton" onClick={handleTwitterShare} /> */}
-      {/* <img src={reddit} alt="Reddit" id="redditButton" onClick={handleRedditShare} /> */}
     </div>
   );
 };
