@@ -41,7 +41,7 @@ function App() {
           }
         />
         <Route path="/login" element={<LoginPage loggedIn={loggedIn} onLogin={handleLogin} />} />
-        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/signup" element={<SignupPage loggedIn={loggedIn} onLogin={handleLogin} />} />
       </Routes>
     </Router>
   );

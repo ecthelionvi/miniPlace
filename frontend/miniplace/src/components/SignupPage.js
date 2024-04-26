@@ -5,7 +5,7 @@ import logo from "../images/logo.png";
 import React, { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 
-const SignupPage = () => {
+const SignupPage = ({ onLogin }) => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
@@ -25,17 +25,19 @@ const SignupPage = () => {
     }
 
     try {
-      await axios.post("http://localhost:8000/register", {
+      const response = await axios.post("http://localhost:8000/register", {
         email,
         password,
       });
+
+      const { userId } = response.data;
+      onLogin(userId);
       navigate("/");
     } catch (error) {
       console.error("Signup error:", error);
       setMessage("Signup failed. Please try again.");
     }
   };
-
   return (
     <div className="signup-form-container">
       <div className="close-button-container">

@@ -116,7 +116,7 @@
 }
 
 .signup-form-login-text {
-  font-size: 16px;
+  font-size: 18px;
   color: #fff;
   margin-top: 20px;
 }
@@ -125,6 +125,7 @@
   color: #89cff0;
   text-decoration: none;
   font-weight: bold;
+  font-size: 18px;
 }
 
 .signup-form-login-link:hover {

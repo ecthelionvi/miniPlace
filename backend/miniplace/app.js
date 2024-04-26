@@ -37,14 +37,41 @@ db.run(`CREATE TABLE IF NOT EXISTS grid_designs (
 app.post("/register", (req, res) => {
   const { email, password } = req.body;
 
-  db.run(`INSERT INTO users (email, password) VALUES (?, ?)`, [email, password], (err) => {
+  db.run(`INSERT INTO users (email, password) VALUES (?, ?)`, [email, password], function (err) {
     if (err) {
       console.error(err);
       res.status(500).json({ error: "Internal server error" });
     } else {
-      res.status(201).json({ message: "User registered successfully" });
+      const userId = this.lastID;
+      res.status(201).json({ message: "User registered successfully", userId });
     }
   });
+});
+
+app.delete("/users/:email", (req, res) => {
+  const email = req.params.email;
+
+  db.run(
+    `DELETE FROM grid_designs WHERE user_id = (SELECT id FROM users WHERE email = ?)`,
+    [email],
+    (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal server error" });
+      } else {
+        db.run(`DELETE FROM users WHERE email = ?`, [email], (err) => {
+          if (err) {
+            console.error(err);
+            res.status(500).json({ error: "Internal server error" });
+          } else {
+            res
+              .status(200)
+              .json({ message: "User and associated grid designs deleted successfully" });
+          }
+        });
+      }
+    },
+  );
 });
 
 app.post("/login", (req, res) => {
