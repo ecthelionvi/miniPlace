@@ -1,6 +1,7 @@
 import Home from "./components/Home";
 import React, { useState, useEffect } from "react";
 import LoginPage from "./components/LoginPage";
+import SignupPage from "./components/SignupPage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           }
         />
         <Route path="/login" element={<LoginPage loggedIn={loggedIn} onLogin={handleLogin} />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Routes>
     </Router>
   );
