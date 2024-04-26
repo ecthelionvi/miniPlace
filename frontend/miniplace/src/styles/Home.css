@@ -207,6 +207,7 @@
 
 #roomCodeContainer {
   margin-left: 10px;
+  margin-bottom: 4px;
   padding: 10px;
   background-color: white;
   border-radius: 4px;
@@ -218,8 +219,9 @@
 }
 
 #roomCodeContainer span {
-  margin-right: 10px;
+  margin-right: 16px;
   font-weight: bold;
+  font-size: 24px;
   font-family: "JetBrainsMonoNerdFont", sans-serif;
 }
 

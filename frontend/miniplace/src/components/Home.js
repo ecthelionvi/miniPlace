@@ -245,7 +245,10 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     setGrid(newGrid);
     setUndoStack([...undoStack, { pixelIndex: index, color: prevColor }]);
     setRedoStack([]);
-    socket.emit("pixelUpdate", { roomCode, pixelIndex: index, color: currentColor });
+
+    if (socket) {
+      socket.emit("pixelUpdate", { roomCode, pixelIndex: index, color: currentColor });
+    }
   };
 
   const handleUndo = () => {
@@ -390,13 +393,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     window.open(twitterUrl, "_blank");
   };
 
-  // const handleRedditShare = () => {
-  //   const pageUrl = "https://miniplace.net";
-  //   const title = encodeURIComponent(document.title);
-  //   const redditUrl = `https://reddit.com/submit?url=${pageUrl}&title=${title}`;
-  //   window.open(redditUrl, "_blank");
-  // };
-
   const createGrid = (size) => {
     const newGrid = Array(size * size).fill("#ffffff");
     setGrid(newGrid);
@@ -452,7 +448,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
               </div>
               {roomCode && (
                 <div id="roomCodeContainer">
-                  <span>{roomCode}</span>
+                  <span>🏠#️⃣ {roomCode} </span>
                   <button onClick={handleCopyRoomCode}>Copy</button>
                 </div>
               )}
