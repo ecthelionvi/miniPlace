@@ -80,7 +80,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         setCurrentColor(parsedGrid.currentColor || "#000000");
       }
     } else {
-      console.log("No grid state found in session storage.");
+      // console.log("No grid state found in session storage.");
       createGrid(30);
     }
   }, []);
