@@ -114,14 +114,14 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   useEffect(() => {
     let newSocket;
     const savedRoomCode = sessionStorage.getItem("roomCode");
-    console.log("Saved Room Code:", savedRoomCode);
+    // console.log("Saved Room Code:", savedRoomCode);
 
     if (savedRoomCode) {
       newSocket = io("http://localhost:8001");
       newSocket.emit("joinRoom", savedRoomCode);
       newSocket.on("connect", () => {
-        console.log("Reconnected to room:", savedRoomCode);
-        newSocket.emit("requestGridState", savedRoomCode); // Request the current grid state from server
+        // console.log("Reconnected to room:", savedRoomCode);
+        newSocket.emit("requestGridState", savedRoomCode);
       });
       setSocket(newSocket);
     } else {
@@ -153,7 +153,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       });
 
       socket.on("activeRoomCodes", (roomCodes) => {
-        console.log("Active Room Codes:", roomCodes);
+        // console.log("Active Room Codes:", roomCodes);
       });
 
       return () => {
@@ -266,7 +266,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   };
 
   const handleJoinRoom = (enteredRoomCode, callback) => {
-    console.log("Joining room with code:", enteredRoomCode);
+    // console.log("Joining room with code:", enteredRoomCode);
     setRoomCode(enteredRoomCode);
     sessionStorage.setItem("roomCode", enteredRoomCode);
 
@@ -309,13 +309,13 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       if (socket) {
         socket.disconnect();
         setSocket(null);
-        console.log("Socket disconnected");
+        // console.log("Socket disconnected");
       }
     } else {
       setPlayClicked(true);
       const newRoomCode = uuidv4().slice(0, 8);
       setRoomCode(newRoomCode);
-      console.log("Room Code:", newRoomCode);
+      // console.log("Room Code:", newRoomCode);
       const newSocket = io("http://localhost:8001");
       setSocket(newSocket);
       newSocket.emit("createRoom", newRoomCode);
@@ -330,7 +330,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       socket.disconnect();
       setSocket(null);
       sessionStorage.removeItem("roomCode");
-      console.log("Socket disconnected");
+      // console.log("Socket disconnected");
     } else if (playClicked === true) {
       setPlayClicked(false);
       setRoomCode("");
@@ -396,7 +396,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const handleColorBlockClick = (color) => {
     setCurrentColor(color);
     setActiveTool("colorBlock");
-    console.log("Color selected:", color);
+    // console.log("Color selected:", color);
   };
 
   const handlePixelClick = (index) => {
@@ -492,7 +492,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
           })
             .then((response) => response.json())
             .then((data) => {
-              console.log(data.message);
+              // console.log(data.message);
               if (data.gridId) {
                 setGridId(data.gridId);
               }
