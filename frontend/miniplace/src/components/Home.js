@@ -53,16 +53,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       };
       sessionStorage.setItem("gridData", JSON.stringify(gridData));
     }
-  }, [
-    grid,
-    undoStack,
-    redoStack,
-    activeTool,
-    currentColor,
-    lastPickerColor,
-    pickerColor,
-    previousColor,
-  ]);
+  }, [ grid, undoStack, redoStack, activeTool, currentColor, lastPickerColor, pickerColor, previousColor ]);
 
   useEffect(() => {
     const storedGrid = sessionStorage.getItem("gridData");
@@ -97,6 +88,35 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       newSocket.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("pixelUpdate", ({ pixelIndex, color }) => {
+        const newGrid = [...grid];
+        newGrid[pixelIndex] = color;
+        setGrid(newGrid);
+      });
+
+      socket.on("requestGridState", () => {
+        socket.emit("gridState", { roomCode, grid });
+      });
+
+      socket.on("gridState", (receivedGrid) => {
+        setGrid(receivedGrid);
+      });
+
+      socket.on("activeRoomCodes", (roomCodes) => {
+        console.log("Active Room Codes:", roomCodes);
+      });
+
+      return () => {
+        socket.off("pixelUpdate");
+        socket.off("requestGridState");
+        socket.off("gridState");
+        socket.off("activeRoomCodes");
+      };
+    }
+  }, [socket, grid, roomCode]);
 
   const handleTrashClick = () => {
     const isAllWhite = grid.every((color) => color === "#ffffff");
@@ -254,35 +274,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       newSocket.emit("requestGridState", newRoomCode);
     }
   };
-
-  useEffect(() => {
-    if (socket) {
-      socket.on("pixelUpdate", ({ pixelIndex, color }) => {
-        const newGrid = [...grid];
-        newGrid[pixelIndex] = color;
-        setGrid(newGrid);
-      });
-
-      socket.on("requestGridState", () => {
-        socket.emit("gridState", { roomCode, grid });
-      });
-
-      socket.on("gridState", (receivedGrid) => {
-        setGrid(receivedGrid);
-      });
-
-      socket.on("activeRoomCodes", (roomCodes) => {
-        console.log("Active Room Codes:", roomCodes);
-      });
-
-      return () => {
-        socket.off("pixelUpdate");
-        socket.off("requestGridState");
-        socket.off("gridState");
-        socket.off("activeRoomCodes");
-      };
-    }
-  }, [socket, grid, roomCode]);
 
   const handleStopClick = () => {
     if (socket) {
