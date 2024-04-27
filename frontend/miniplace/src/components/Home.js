@@ -40,8 +40,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [showClipboardPopup, setShowClipboardPopup] = useState(false);
 
   useEffect(() => {
-    const isAllWhite = grid.every((color) => color === "#ffffff");
-    if (!isAllWhite) {
+    if (grid.length > 0) {
       const gridData = {
         grid,
         undoStack,
