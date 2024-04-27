@@ -9,6 +9,7 @@ os.environ["NODE_ENV"] = "production"
 build_command = ["npm", "run", "build"]
 serve_command = ["serve", "-s", "build"]
 backend_command = ["pm2", "start", "app.js"]
+
 backend_dir = os.path.join("backend", "miniplace")
 frontend_dir = os.path.join("frontend", "miniplace")
 
@@ -29,11 +30,21 @@ def stop_processes():
             proc.send_signal(signal.SIGINT)
             proc.wait()
 
-    # Stop the backend server using PM2 with force flag
-    subprocess.run(["pm2", "stop", "app", "--force"], check=True)
+    # Stop the backend server using PM2 with force flag and suppress output
+    subprocess.run(
+        ["pm2", "stop", "app", "--force"],
+        check=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
 
-    # Kill the PM2 daemon
-    subprocess.run(["pm2", "kill"], check=True)
+    # Kill the PM2 daemon and suppress output
+    subprocess.run(
+        ["pm2", "kill"],
+        check=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
 
 
 signal.signal(signal.SIGINT, handle_keyboard_interrupt)
@@ -42,7 +53,6 @@ os.chdir(backend_dir)
 subprocess.run(backend_command, check=True)
 
 os.chdir(os.path.join("..", "..", frontend_dir))
-
 subprocess.run(build_command, check=True)
 
 subprocess.Popen(serve_command)
