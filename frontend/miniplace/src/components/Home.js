@@ -40,8 +40,67 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [showClipboardPopup, setShowClipboardPopup] = useState(false);
 
   useEffect(() => {
-    createGrid(30);
+    const isAllWhite = grid.every((color) => color === "#ffffff");
+    if (!isAllWhite) {
+      const gridData = {
+        grid,
+        undoStack,
+        redoStack,
+        activeTool,
+        currentColor,
+        pickerColor,
+        lastPickerColor,
+        previousColor,
+      };
+      sessionStorage.setItem("gridData", JSON.stringify(gridData));
+      // console.log("Grid state saved to session storage:", gridData);
+    }
+  }, [
+    grid,
+    undoStack,
+    redoStack,
+    activeTool,
+    currentColor,
+    lastPickerColor,
+    pickerColor,
+    previousColor,
+  ]);
+
+  useEffect(() => {
+    const storedGrid = sessionStorage.getItem("gridData");
+    if (storedGrid) {
+      const parsedGrid = JSON.parse(storedGrid);
+      setGrid(parsedGrid.grid);
+      setUndoStack(parsedGrid.undoStack || []);
+      setRedoStack(parsedGrid.redoStack || []);
+      setPickerColor(parsedGrid.pickerColor);
+      if (parsedGrid.activeTool === "eraser") {
+        setPreviousColor(parsedGrid.previousColor);
+        setActiveTool("eraser");
+      } else {
+        setActiveTool(parsedGrid.activeTool || "colorBlock");
+        setCurrentColor(parsedGrid.currentColor || "#000000");
+        // console.log("Grid state loaded from session storage:", parsedGrid);
+      }
+    } else {
+      console.log("No grid state found in session storage.");
+      createGrid(30);
+    }
   }, []);
+
+  // useEffect(() => {
+  //   sessionStorage.setItem("activeTool", activeTool);
+  //   console.log("Active tool:", activeTool);
+  // }, [activeTool]);
+
+  // useEffect(() => {
+  //   sessionStorage.setItem("currentColor", currentColor);
+  //   console.log("Current color:", currentColor);
+  // }, [currentColor]);
+
+  // useEffect(() => {
+  //   createGrid(30);
+  // }, []);
 
   useEffect(() => {
     const newSocket = io("http://localhost:8001");
@@ -427,6 +486,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       console.log("User not logged in. Cannot save grid design.");
     }
   };
+
   const handleSavePopup = () => {
     setShowSavePopup(true);
   };
@@ -470,6 +530,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       console.log("User not logged in. Cannot load grid design.");
     }
   };
+
   const handleDownload = () => {
     if (showComponent === "grid") {
       html2canvas(document.getElementById("grid")).then((canvas) => {
