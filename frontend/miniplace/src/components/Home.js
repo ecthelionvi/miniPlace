@@ -7,6 +7,8 @@ import footer from "../images/footer.png";
 import Menubar from "../components/MenuBar";
 import PlayButton from "../images/play.png";
 import JoinButton from "../images/join.png";
+import NewPopup from "../components/NewPopup";
+import SavePopup from "../components/SavePopup";
 import RecButton from "../images/rec-button.png";
 import TrashPopup from "../components/TrashPopup";
 import StopButton from "../images/stop-button.png";
@@ -14,29 +16,27 @@ import React, { useState, useEffect } from "react";
 import ColorPalette from "../components/ColorPalette";
 import LoadComponent from "../components/LoadComponent";
 import RoomCodePopup from "../components/RoomCodePopup";
-import GalleryComponent from "../components/GalleryComponent";
-import NewPopup from "../components/NewPopup";
-import SavePopup from "../components/SavePopup";
 import ClipboardPopup from "../components/ClipboardPopup";
+import GalleryComponent from "../components/GalleryComponent";
 
 const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [grid, setGrid] = useState([]);
   const [gridId, setGridId] = useState(null);
+  const [socket, setSocket] = useState(null);
+  const [roomCode, setRoomCode] = useState("");
   const [undoStack, setUndoStack] = useState([]);
   const [redoStack, setRedoStack] = useState([]);
-  const [socket, setSocket] = useState(null);
   const [playClicked, setPlayClicked] = useState(false);
-  const [showComponent, setShowComponent] = useState("grid");
-  const [currentColor, setCurrentColor] = useState("#000000");
+  const [showNewPopup, setShowNewPopup] = useState(false);
   const [pickerColor, setPickerColor] = useState("#FFC0CB");
+  const [showSavePopup, setShowSavePopup] = useState(false);
+  const [showComponent, setShowComponent] = useState("grid");
   const [activeTool, setActiveTool] = useState("colorBlock");
-  const [roomCode, setRoomCode] = useState("");
+  const [currentColor, setCurrentColor] = useState("#000000");
+  const [showTrashPopup, setShowTrashPopup] = useState(false);
+  const [previousColor, setPreviousColor] = useState("#ffffff");
   const [lastPickerColor, setLastPickerColor] = useState("#FFC0CB");
   const [showRoomCodePopup, setShowRoomCodePopup] = useState(false);
-  const [previousColor, setPreviousColor] = useState("#ffffff");
-  const [showTrashPopup, setShowTrashPopup] = useState(false);
-  const [showNewPopup, setShowNewPopup] = useState(false);
-  const [showSavePopup, setShowSavePopup] = useState(false);
   const [showClipboardPopup, setShowClipboardPopup] = useState(false);
 
   useEffect(() => {
