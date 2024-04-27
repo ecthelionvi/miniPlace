@@ -53,7 +53,16 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       };
       sessionStorage.setItem("gridData", JSON.stringify(gridData));
     }
-  }, [ grid, undoStack, redoStack, activeTool, currentColor, lastPickerColor, pickerColor, previousColor ]);
+  }, [
+    grid,
+    undoStack,
+    redoStack,
+    activeTool,
+    currentColor,
+    lastPickerColor,
+    pickerColor,
+    previousColor,
+  ]);
 
   useEffect(() => {
     const storedGrid = sessionStorage.getItem("gridData");
@@ -81,11 +90,49 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   // }, []);
 
   useEffect(() => {
-    const newSocket = io("http://localhost:8001");
-    setSocket(newSocket);
+    if (roomCode.length > 0) {
+      sessionStorage.setItem("roomCode", roomCode);
+    }
+  }, [roomCode]);
+
+  useEffect(() => {
+    const savedRoomCode = sessionStorage.getItem("roomCode");
+    if (savedRoomCode) {
+      setRoomCode(savedRoomCode);
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   const newSocket = io("http://localhost:8001");
+  //   setSocket(newSocket);
+
+  //   return () => {
+  //     newSocket.disconnect();
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    let newSocket;
+    const savedRoomCode = sessionStorage.getItem("roomCode");
+    console.log("Saved Room Code:", savedRoomCode);
+
+    if (savedRoomCode) {
+      newSocket = io("http://localhost:8001");
+      newSocket.emit("joinRoom", savedRoomCode);
+      newSocket.on("connect", () => {
+        console.log("Reconnected to room:", savedRoomCode);
+        newSocket.emit("requestGridState", savedRoomCode); // Request the current grid state from server
+      });
+      setSocket(newSocket);
+    } else {
+      newSocket = io("http://localhost:8001");
+      setSocket(newSocket);
+    }
 
     return () => {
-      newSocket.disconnect();
+      if (newSocket) {
+        newSocket.disconnect();
+      }
     };
   }, []);
 
@@ -221,6 +268,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const handleJoinRoom = (enteredRoomCode, callback) => {
     console.log("Joining room with code:", enteredRoomCode);
     setRoomCode(enteredRoomCode);
+    sessionStorage.setItem("roomCode", enteredRoomCode);
 
     if (!socket) {
       const newSocket = io("http://localhost:8001");
@@ -281,6 +329,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       setPlayClicked(false);
       socket.disconnect();
       setSocket(null);
+      sessionStorage.removeItem("roomCode");
       console.log("Socket disconnected");
     } else if (playClicked === true) {
       setPlayClicked(false);
