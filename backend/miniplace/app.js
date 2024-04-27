@@ -91,7 +91,7 @@ app.post("/login", (req, res) => {
 
 app.post("/save-grid-design", upload.single("screenshot"), (req, res) => {
   const userId = req.body.userId;
-  const gridId = req.body.gridId; // Optional gridId parameter
+  const gridId = req.body.gridId;
   const gridData = JSON.stringify(req.body.gridData);
   const screenshotBlob = req.file.buffer;
 
@@ -145,22 +145,6 @@ app.post("/save-grid-design", upload.single("screenshot"), (req, res) => {
   }
 });
 
-// app.get("/all-grid-designs", (req, res) => {
-//   db.all(`SELECT * FROM grid_designs`, (err, rows) => {
-//     if (err) {
-//       console.error(err);
-//       res.status(500).json({ error: "Internal server error" });
-//     } else {
-//       const gridDesigns = rows.map((row) => ({
-//         id: row.id,
-//         userId: row.user_id,
-//         screenshot: row.screenshot.toString("base64"),
-//       }));
-//       res.status(200).json({ gridDesigns });
-//     }
-//   });
-// });
-
 app.get("/all-grid-designs", (req, res) => {
   db.all(`SELECT * FROM grid_designs`, (err, rows) => {
     if (err) {
@@ -171,8 +155,8 @@ app.get("/all-grid-designs", (req, res) => {
         id: row.id,
         userId: row.user_id,
         screenshot: row.screenshot.toString("base64"),
-        width: 1, // Default width
-        height: 1, // Default height
+        width: 1,
+        height: 1,
       }));
       res.status(200).json({ gridDesigns });
     }
