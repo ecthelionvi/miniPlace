@@ -6,11 +6,13 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(() => {
-    const sessionLoggedIn = sessionStorage.getItem("loggedIn");
-    return sessionLoggedIn === "true";
+    const userId = sessionStorage.getItem("userId");
+    return !!userId;
   });
 
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(() => {
+    return sessionStorage.getItem("userId");
+  });
 
   useEffect(() => {
     sessionStorage.setItem("loggedIn", loggedIn);
@@ -19,11 +21,13 @@ function App() {
   const handleLogin = (userId) => {
     setLoggedIn(true);
     setUserId(userId);
+    sessionStorage.setItem("userId", userId);
   };
 
   const handleLogout = () => {
     setLoggedIn(false);
     setUserId(null);
+    sessionStorage.removeItem("userId");
   };
 
   return (

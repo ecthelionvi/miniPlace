@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/MenuBar.css";
 import logo from "../images/logo.png";
 import home from "../images/home.png";
@@ -33,6 +33,44 @@ const Menubar = ({
   handleTwitterShare,
   handleNewClick,
 }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const userId = sessionStorage.getItem("userId");
+    return !!userId;
+  });
+
+  // useEffect(() => {
+  //   const checkLoginStatus = () => {
+  //     const userId = localStorage.getItem("userId");
+  //     setIsLoggedIn(!!userId);
+  //   };
+
+  //   window.addEventListener("load", checkLoginStatus);
+  //   window.addEventListener("storage", checkLoginStatus);
+
+  //   return () => {
+  //     window.removeEventListener("load", checkLoginStatus);
+  //     window.removeEventListener("storage", checkLoginStatus);
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      const userId = sessionStorage.getItem("userId");
+      setIsLoggedIn(!!userId);
+    };
+
+    window.addEventListener("storage", checkLoginStatus);
+
+    return () => {
+      window.removeEventListener("storage", checkLoginStatus);
+    };
+  }, []);
+
+  const handleSignOut = () => {
+    handleLogout();
+    setIsLoggedIn(false);
+  };
+
   return (
     <header id="menuBarHeader">
       <nav id="menuBarNav">
@@ -83,14 +121,14 @@ const Menubar = ({
             <span className="tooltiptext-load">Share</span>
           </div>
           <div className="tooltip">
-            {loggedIn ? (
-              <img src={signOut} alt="Sign Out" id="signOutGrid" onClick={handleLogout} />
+            {isLoggedIn ? (
+              <img src={signOut} alt="Sign Out" id="signOutGrid" onClick={handleSignOut} />
             ) : (
               <NavLink to="/login">
                 <img src={signIn} alt="Sign In" id="signInGrid" />
               </NavLink>
             )}
-            <span className="tooltiptext-load">{loggedIn ? "Sign Out" : "Sign In"}</span>
+            <span className="tooltiptext-load">{isLoggedIn ? "Sign Out" : "Sign In"}</span>
           </div>
         </div>
       </nav>

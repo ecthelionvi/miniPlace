@@ -35,6 +35,24 @@ const GalleryComponent = () => {
     setViewerIsOpen(false);
   };
 
+  const handleKeyDown = useCallback(
+    (event) => {
+      if (event.key === "ArrowLeft") {
+        setCurrentImage((prevIndex) => (prevIndex === 0 ? photos.length - 1 : prevIndex - 1));
+      } else if (event.key === "ArrowRight") {
+        setCurrentImage((prevIndex) => (prevIndex === photos.length - 1 ? 0 : prevIndex + 1));
+      }
+    },
+    [photos],
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleKeyDown]);
+
   return (
     <div className="gallery-container-hero">
       <img src={GalleryText} alt="GalleryText" className="gallery-text" />
