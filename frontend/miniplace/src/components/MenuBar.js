@@ -53,6 +53,7 @@ const Menubar = ({
 
   const handleSignOut = () => {
     handleLogout();
+    handleHomeClick();
     setIsLoggedIn(false);
   };
 
