@@ -38,21 +38,6 @@ const Menubar = ({
     return !!userId;
   });
 
-  // useEffect(() => {
-  //   const checkLoginStatus = () => {
-  //     const userId = localStorage.getItem("userId");
-  //     setIsLoggedIn(!!userId);
-  //   };
-
-  //   window.addEventListener("load", checkLoginStatus);
-  //   window.addEventListener("storage", checkLoginStatus);
-
-  //   return () => {
-  //     window.removeEventListener("load", checkLoginStatus);
-  //     window.removeEventListener("storage", checkLoginStatus);
-  //   };
-  // }, []);
-
   useEffect(() => {
     const checkLoginStatus = () => {
       const userId = sessionStorage.getItem("userId");
