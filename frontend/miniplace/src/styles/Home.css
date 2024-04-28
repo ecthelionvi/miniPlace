@@ -151,26 +151,6 @@
   opacity: 1;
 }
 
-#twitterButton {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 64px;
-  height: auto;
-  cursor: pointer;
-  z-index: 10;
-}
-
-#redditButton {
-  position: fixed;
-  bottom: 20px;
-  right: 100px;
-  width: 64px;
-  height: auto;
-  cursor: pointer;
-  z-index: 10;
-}
-
 #clickText {
   margin: 15px 0;
   -webkit-filter: drop-shadow(5px 5px 5px #222);

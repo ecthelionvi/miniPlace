@@ -74,7 +74,6 @@
   width: 73px;
   height: auto;
   margin-left: -5px;
-  /* margin-bottom: 2px; */
 }
 
 #homeGrid {
@@ -94,7 +93,6 @@
 #pencilGrid {
   width: 73px;
   height: auto;
-  /* margin-right: 2px; */
   margin-bottom: 3px;
   margin-left: 4px;
 }
@@ -118,7 +116,6 @@
   width: 72px;
   height: auto;
   margin-right: 5px;
-  /* margin-left: -2px; */
 }
 
 #undoGrid,
@@ -130,9 +127,7 @@
 #saveGrid,
 #homeGrid,
 #undoGrid,
-#redoGrid,
-#redditButton,
-#twitterButton {
+#redoGrid {
   cursor: pointer;
   transition: opacity 0.3s ease;
   margin: 0px 5px;
@@ -143,7 +138,6 @@
 #pencilGrid {
   cursor: pointer;
   transition: opacity 0.3s ease;
-  /* margin: 2px 5px; */
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);
 }
@@ -190,8 +184,6 @@
 #accountGrid:hover,
 #undoGrid:hover,
 #redoGrid:hover,
-#redditButton:hover,
-#twitterButton:hover,
 #multiplayerGrid:hover,
 #eraserGrid:hover,
 #signInGrid:hover,
@@ -203,8 +195,6 @@
 }
 
 #navbarLogo {
-  /* margin: 0 10px; */
-  /* margin-bottom: -10px; */
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);
 }
