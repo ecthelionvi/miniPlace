@@ -27,6 +27,16 @@
   overflow: hidden;
 }
 
+/* #buttonContainer { */
+/*   display: flex; */
+/*   flex-direction: row; */
+/*   justify-content: center; */
+/*   align-items: center; */
+/*   height: 50px; */
+/*   margin-top: 16px; */
+/*   margin-bottom: 12px; */
+/* } */
+
 #buttonContainer {
   display: flex;
   flex-direction: row;
@@ -35,6 +45,49 @@
   height: 50px;
   margin-top: 16px;
   margin-bottom: 12px;
+}
+
+#recButton,
+#playButton,
+#stopButton,
+#joinButton {
+  width: 42px;
+  height: auto;
+  margin-right: 8px;
+  -webkit-filter: drop-shadow(2px 2px 5px #222);
+  filter: drop-shadow(2px 2px 2px #222);
+}
+
+@media (max-width: 768px) {
+  #buttonContainer {
+    height: 40px;
+    /* margin-top: 12px; */
+    /* margin-bottom: 8px; */
+  }
+
+  #recButton,
+  #playButton,
+  #stopButton,
+  #joinButton {
+    width: 38px;
+    margin-right: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  #buttonContainer {
+    height: 32px;
+    /* margin-top: 8px; */
+    /* margin-bottom: 6px; */
+  }
+
+  #recButton,
+  #playButton,
+  #stopButton,
+  #joinButton {
+    width: 36px;
+    margin-right: 4px;
+  }
 }
 
 #gridContainer,
@@ -65,56 +118,56 @@
   filter: drop-shadow(5px 5px 5px #222);
 }
 
-@keyframes flash {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
+/* @keyframes flash { */
+/*   0%, */
+/*   100% { */
+/*     opacity: 1; */
+/*   } */
+/*   50% { */
+/*     opacity: 0; */
+/*   } */
+/* } */
 
-#recButton {
-  width: 50px;
-  height: auto;
-  animation: flash 2s infinite;
-  z-index: 10;
-  margin-right: 10px;
-  margin-bottom: 5px;
-  -webkit-filter: drop-shadow(2px 2px 5px #222);
-  filter: drop-shadow(2px 2px 2px #222);
-}
+/* #recButton { */
+  /* width: 50px; */
+  /* height: auto; */
+  /* animation: flash 2s infinite; */
+  /* z-index: 10; */
+  /* margin-right: 10px; */
+  /* margin-bottom: 5px; */
+  /* -webkit-filter: drop-shadow(2px 2px 5px #222); */
+  /* filter: drop-shadow(2px 2px 2px #222); */
+/* } */
 
-#playButton {
-  width: 51px;
-  height: auto;
-  cursor: pointer;
-  z-index: 10;
-  margin-right: 10px;
-  -webkit-filter: drop-shadow(2px 2px 5px #222);
-  filter: drop-shadow(2px 2px 2px #222);
-}
+/* #playButton { */
+/*   width: 51px; */
+/*   height: auto; */
+/*   cursor: pointer; */
+/*   z-index: 10; */
+/*   margin-right: 10px; */
+/*   -webkit-filter: drop-shadow(2px 2px 5px #222); */
+/*   filter: drop-shadow(2px 2px 2px #222); */
+/* } */
 
-#stopButton {
-  width: 49px;
-  height: auto;
-  cursor: pointer;
-  z-index: 10;
-  margin-right: 10px;
-  -webkit-filter: drop-shadow(2px 2px 5px #222);
-  filter: drop-shadow(2px 2px 2px #222);
-}
+/* #stopButton { */
+/*   width: 49px; */
+/*   height: auto; */
+/*   cursor: pointer; */
+/*   z-index: 10; */
+/*   margin-right: 10px; */
+/*   -webkit-filter: drop-shadow(2px 2px 5px #222); */
+/*   filter: drop-shadow(2px 2px 2px #222); */
+/* } */
 
-#joinButton {
-  width: 49px;
-  height: auto;
-  cursor: pointer;
-  z-index: 10;
-  margin-right: 10px;
-  -webkit-filter: drop-shadow(2px 2px 5px #222);
-  filter: drop-shadow(2px 2px 2px #222);
-}
+/* #joinButton { */
+/*   width: 49px; */
+/*   height: auto; */
+/*   cursor: pointer; */
+/*   z-index: 10; */
+/*   margin-right: 10px; */
+/*   -webkit-filter: drop-shadow(2px 2px 5px #222); */
+/*   filter: drop-shadow(2px 2px 2px #222); */
+/* } */
 
 #joinButton:hover,
 #playButton:hover,
@@ -196,6 +249,41 @@
   /* } */
 }
 
+/* #roomCodeContainer { */
+/*   margin-left: 10px; */
+/*   margin-bottom: 4px; */
+/*   padding: 10px; */
+/*   background-color: white; */
+/*   border-radius: 4px; */
+/*   display: flex; */
+/*   align-items: center; */
+/*   z-index: 10; */
+/*   -webkit-filter: drop-shadow(2px 2px 2px #222); */
+/*   filter: drop-shadow(2px 2px 2px #222); */
+/* } */
+
+/* #roomCodeContainer span { */
+/*   margin-right: 16px; */
+/*   font-weight: bold; */
+/*   font-size: 24px; */
+/*   font-family: "JetBrainsMonoNerdFont", sans-serif; */
+/* } */
+
+/* #roomCodeContainer button { */
+/*   padding: 5px 10px; */
+/*   background-color: #f0f0f0; */
+/*   border: none; */
+/*   border-radius: 4px; */
+/*   cursor: pointer; */
+/*   -webkit-filter: drop-shadow(1px 1px 1px #222); */
+/*   filter: drop-shadow(1px 1px 1px #222); */
+/* } */
+
+/* #roomCodeContainer button:hover { */
+/*   opacity: 1; */
+/*   filter: drop-shadow(1px 1px 1px #222) brightness(0.9) sepia(2) hue-rotate(0deg) saturate(5); */
+/* } */
+
 #roomCodeContainer {
   margin-left: 10px;
   margin-bottom: 4px;
@@ -207,13 +295,36 @@
   z-index: 10;
   -webkit-filter: drop-shadow(2px 2px 2px #222);
   filter: drop-shadow(2px 2px 2px #222);
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
 }
+
+/* #roomCodeContainer span { */
+/*   margin-right: 16px; */
+/*   font-weight: bold; */
+/*   font-size: 20px; */
+/*   font-family: "JetBrainsMonoNerdFont", sans-serif; */
+/* } */
 
 #roomCodeContainer span {
   margin-right: 16px;
-  font-weight: bold;
-  font-size: 24px;
+  font-weight: bolder;
+  font-size: 20px;
   font-family: "JetBrainsMonoNerdFont", sans-serif;
+  animation: flashRed 3s infinite;
+}
+
+@keyframes flashRed {
+  0% {
+    color: inherit;
+  }
+  50% {
+    color: red;
+  }
+  100% {
+    color: inherit;
+  }
 }
 
 #roomCodeContainer button {
@@ -224,6 +335,7 @@
   cursor: pointer;
   -webkit-filter: drop-shadow(1px 1px 1px #222);
   filter: drop-shadow(1px 1px 1px #222);
+  font-size: 14px;
 }
 
 #roomCodeContainer button:hover {

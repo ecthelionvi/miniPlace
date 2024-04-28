@@ -4,15 +4,18 @@ import "../styles/RoomCodePopup.css";
 const RoomCodePopup = ({ onJoinRoom, onClose }) => {
   const [roomCode, setRoomCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isRoomCodeValid, setIsRoomCodeValid] = useState(false);
   const popupRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onJoinRoom(roomCode, (isValid) => {
-      if (!isValid) {
-        setErrorMessage("Invalid Room Code");
-      }
-    });
+    if (isRoomCodeValid) {
+      onJoinRoom(roomCode, (isValid) => {
+        if (!isValid) {
+          setErrorMessage("Invalid Room Code");
+        }
+      });
+    }
   };
 
   useEffect(() => {
@@ -28,14 +31,22 @@ const RoomCodePopup = ({ onJoinRoom, onClose }) => {
       }
     };
 
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter" && !isRoomCodeValid) {
+        e.preventDefault();
+      }
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleEscapeKey);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleEscapeKey);
+      document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [onClose]);
+  }, [isRoomCodeValid, onClose]);
 
   return (
     <div className="room-code-popup-overlay">
@@ -49,7 +60,9 @@ const RoomCodePopup = ({ onJoinRoom, onClose }) => {
                 id="roomCode"
                 value={roomCode}
                 onChange={(e) => {
-                  setRoomCode(e.target.value);
+                  const code = e.target.value;
+                  setRoomCode(code);
+                  setIsRoomCodeValid(code.trim().length > 0);
                   setErrorMessage("");
                 }}
                 required
@@ -57,7 +70,7 @@ const RoomCodePopup = ({ onJoinRoom, onClose }) => {
               />
               {errorMessage && <span className="room-code-popup-error">{errorMessage}</span>}
             </div>
-            <button type="submit" className="room-code-popup-button">
+            <button type="submit" className="room-code-popup-button" disabled={!isRoomCodeValid}>
               Join Room
             </button>
           </form>

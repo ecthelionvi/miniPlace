@@ -19,6 +19,11 @@ import RoomCodePopup from "../components/RoomCodePopup";
 import ClipboardPopup from "../components/ClipboardPopup";
 import GalleryComponent from "../components/GalleryComponent";
 
+// import PlayButton from "../images/buttons/play.png";
+// import JoinButton from "../images/buttons/join.png";
+// import RecButton from "../images/buttons/link.png";
+// import StopButton from "../images/buttons/stop.png";
+
 const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [grid, setGrid] = useState([]);
   const [gridId, setGridId] = useState(null);
@@ -264,10 +269,45 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     setShowRoomCodePopup(true);
   };
 
+  // const handleJoinRoom = (enteredRoomCode, callback) => {
+  //   // console.log("Joining room with code:", enteredRoomCode);
+  //   setRoomCode(enteredRoomCode);
+  //   sessionStorage.setItem("roomCode", enteredRoomCode);
+
+  //   if (!socket) {
+  //     const newSocket = io("http://localhost:8001");
+  //     setSocket(newSocket);
+
+  //     newSocket.emit("checkRoomCode", enteredRoomCode, (isValid) => {
+  //       if (isValid) {
+  //         setRoomCode(enteredRoomCode);
+  //         setShowRoomCodePopup(false);
+  //         newSocket.emit("joinRoom", enteredRoomCode);
+  //         newSocket.emit("requestGridState", enteredRoomCode);
+  //         setPlayClicked(true);
+  //       } else {
+  //         console.log("Invalid room code:", enteredRoomCode);
+  //         callback(false);
+  //       }
+  //     });
+  //   } else {
+  //     socket.emit("checkRoomCode", enteredRoomCode, (isValid) => {
+  //       if (isValid) {
+  //         setRoomCode(enteredRoomCode);
+  //         setShowRoomCodePopup(false);
+  //         socket.emit("joinRoom", enteredRoomCode);
+  //         socket.emit("requestGridState", enteredRoomCode);
+  //         setPlayClicked(true);
+  //       } else {
+  //         console.log("Invalid room code:", enteredRoomCode);
+  //         callback(false);
+  //       }
+  //     });
+  //   }
+  // };
+
   const handleJoinRoom = (enteredRoomCode, callback) => {
     // console.log("Joining room with code:", enteredRoomCode);
-    setRoomCode(enteredRoomCode);
-    sessionStorage.setItem("roomCode", enteredRoomCode);
 
     if (!socket) {
       const newSocket = io("http://localhost:8001");
@@ -276,6 +316,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       newSocket.emit("checkRoomCode", enteredRoomCode, (isValid) => {
         if (isValid) {
           setRoomCode(enteredRoomCode);
+          sessionStorage.setItem("roomCode", enteredRoomCode);
           setShowRoomCodePopup(false);
           newSocket.emit("joinRoom", enteredRoomCode);
           newSocket.emit("requestGridState", enteredRoomCode);
@@ -289,6 +330,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       socket.emit("checkRoomCode", enteredRoomCode, (isValid) => {
         if (isValid) {
           setRoomCode(enteredRoomCode);
+          sessionStorage.setItem("roomCode", enteredRoomCode);
           setShowRoomCodePopup(false);
           socket.emit("joinRoom", enteredRoomCode);
           socket.emit("requestGridState", enteredRoomCode);
@@ -613,7 +655,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         <div id="buttonContainer">
           {showComponent === "grid" ? (
             <>
-              {playClicked ? <img src={RecButton} alt="Record Button" id="recButton" /> : null}
+              {/* {playClicked ? <img src={RecButton} alt="Record Button" id="recButton" /> : null} */}
               <div className="tooltip-button">
                 <img src={PlayButton} alt="Play Button" id="playButton" onClick={handlePlayClick} />
                 <span className="tooltiptext-button">Play</span>
