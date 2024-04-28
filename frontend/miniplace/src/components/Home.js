@@ -135,8 +135,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         setGrid(receivedGrid);
       });
 
-      socket.on("activeRoomCodes", (roomCodes) => {
-      });
+      socket.on("activeRoomCodes", (roomCodes) => {});
 
       return () => {
         socket.off("pixelUpdate");
@@ -558,6 +557,10 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     setGrid(newGrid);
   };
 
+  const handleFooterClick = () => {
+    window.open("https://github.com/ecthelionvi/miniPlace", "_blank");
+  };
+
   return (
     <div id="homeBody">
       <Menubar
@@ -637,7 +640,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
                 setActiveTool={setActiveTool}
                 handleColorPickerClick={handleColorPickerClick}
               />
-              <img src={footer} alt="Text" id="footerText" />
+              <img src={footer} alt="Text" id="footerText" onClick={handleFooterClick} />
             </>
           ) : showComponent === "gallery" ? (
             <GalleryComponent />

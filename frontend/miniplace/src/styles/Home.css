@@ -43,6 +43,7 @@
 #joinButton {
   width: 42px;
   height: auto;
+  cursor: pointer;
   margin-right: 8px;
   -webkit-filter: drop-shadow(2px 2px 5px #222);
   filter: drop-shadow(2px 2px 2px #222);
@@ -92,6 +93,7 @@
 #footerText {
   padding: 10px 0;
   height: 24px;
+  cursor: pointer;
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);
 }
