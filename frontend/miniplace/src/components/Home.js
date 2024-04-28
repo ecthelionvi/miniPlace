@@ -9,7 +9,6 @@ import PlayButton from "../images/play.png";
 import JoinButton from "../images/join.png";
 import NewPopup from "../components/NewPopup";
 import SavePopup from "../components/SavePopup";
-import RecButton from "../images/rec-button.png";
 import TrashPopup from "../components/TrashPopup";
 import StopButton from "../images/stop-button.png";
 import React, { useState, useEffect } from "react";

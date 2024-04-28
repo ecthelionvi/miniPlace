@@ -49,30 +49,22 @@
 }
 
 @media (max-width: 768px) {
-  #buttonContainer {
-    height: 40px;
-  }
-
   #recButton,
   #playButton,
   #stopButton,
   #joinButton {
     width: 38px;
-    margin-right: 6px;
+    margin-right: 8px;
   }
 }
 
 @media (max-width: 480px) {
-  #buttonContainer {
-    height: 32px;
-  }
-
   #recButton,
   #playButton,
   #stopButton,
   #joinButton {
     width: 36px;
-    margin-right: 4px;
+    margin-right: 8px;
   }
 }
 
