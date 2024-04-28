@@ -164,7 +164,7 @@
   margin-right: 8px;
 }
 
-@media (max-width: 1368px) {
+@media (max-width: 1370px) {
   :root {
     --grid-size: 18px;
   }
