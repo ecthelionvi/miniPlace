@@ -140,7 +140,6 @@
   filter: drop-shadow(5px 5px 5px #222);
 }
 
-
 #pencilGrid {
   cursor: pointer;
   transition: opacity 0.3s ease;
@@ -224,7 +223,7 @@
   border-radius: 6px;
   padding: 5px 0;
   position: absolute;
-  z-index: 6;
+  z-index: 9999;
   top: 100%;
   left: 50%;
   margin-left: -60px;
