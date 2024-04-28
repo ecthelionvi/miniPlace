@@ -164,6 +164,16 @@
   margin-right: 8px;
 }
 
+@media (max-width: 1368px) {
+  :root {
+    --grid-size: 18px;
+  }
+
+  #navbarLogo {
+    margin-bottom: 10px;
+  }
+}
+
 @media (max-width: 1293px) {
   :root {
     --grid-size: 18px;
