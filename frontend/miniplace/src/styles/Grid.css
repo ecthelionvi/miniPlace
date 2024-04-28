@@ -1,28 +1,31 @@
 :root {
-  --grid-size: 20px;
+  --grid-size: 1vw; /* Starting default, dynamically adjusted by JS */
   --grid-columns: 30;
 }
 
 #gridWrapper {
   background-color: #fff;
   border: 5px solid black;
-  box-sizing: border-box;
+  box-sizing: border-box; /* Consider border in size calculations */
   position: relative;
   z-index: 1;
   margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden; /* Prevents any overflow */
 }
 
 #grid {
   cursor: crosshair;
   display: grid;
-  grid-template-columns: repeat(var(--grid-columns), var(--grid-size));
-  grid-gap: 1px;
+  grid-template-columns: repeat(var(--grid-columns), 1fr); /* Use 1fr for equal sizing */
+  gap: 1px; /* Consistent small gap */
   box-sizing: border-box;
+  width: 100%; /* Full width of its container */
+  height: 100%; /* Full height of its container */
 }
 
 #grid div {
-  width: var(--grid-size);
-  height: var(--grid-size);
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
   border: 1px solid #eee;
-  box-sizing: border-box;
 }

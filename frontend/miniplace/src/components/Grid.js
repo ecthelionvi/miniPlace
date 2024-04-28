@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/Grid.css";
 
 const Grid = ({ grid, handlePixelClick }) => {
+  useEffect(() => {
+    const updateGridSize = () => {
+      const wrapperBorderWidth = 10; // Total for both sides (5px each)
+      const maxWidth = Math.min(window.innerWidth - wrapperBorderWidth, 639);
+      const maxHeight = Math.min(window.innerHeight - wrapperBorderWidth, 797);
+      const minDimension = Math.min(maxWidth, maxHeight);
+      const sizePerDiv = Math.floor(minDimension / 30);
+      document.documentElement.style.setProperty("--grid-size", `${sizePerDiv}px`);
+
+      const gridWrapper = document.getElementById("gridWrapper");
+      const totalSize = sizePerDiv * 30 + 1; // Including 1px for the gap between divs
+      gridWrapper.style.width = `${totalSize}px`;
+      gridWrapper.style.height = `${totalSize}px`;
+    };
+
+    updateGridSize();
+    window.addEventListener("resize", updateGridSize);
+
+    return () => window.removeEventListener("resize", updateGridSize);
+  }, []);
+
   return (
     <div id="gridWrapper">
       <div id="grid">
