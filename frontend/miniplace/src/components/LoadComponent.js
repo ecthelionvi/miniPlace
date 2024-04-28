@@ -5,6 +5,7 @@ import loadText from "../images/load.png";
 
 const LoadComponent = ({ userId, handleLoadGrid }) => {
   const [photos, setPhotos] = useState([]);
+  const [galleryWidth, setGalleryWidth] = useState(0); // state to store gallery width
 
   useEffect(() => {
     if (userId) {
@@ -22,6 +23,18 @@ const LoadComponent = ({ userId, handleLoadGrid }) => {
         .catch((error) => {
           console.error("Error loading photos:", error);
         });
+
+      const handleResize = () => {
+        const maxImagesPerRow = Math.floor(window.innerWidth / 268); // calculate images per row
+        const newGalleryWidth = maxImagesPerRow * 268; // calculate new gallery width
+        const maxWidth = 1300; // Define your maximum width here
+        setGalleryWidth(Math.min(newGalleryWidth, maxWidth)); // Set the smaller of calculated or max width
+      };
+
+      window.addEventListener("resize", handleResize);
+      handleResize(); // Initial call
+
+      return () => window.removeEventListener("resize", handleResize);
     }
   }, [userId]);
 
@@ -34,7 +47,7 @@ const LoadComponent = ({ userId, handleLoadGrid }) => {
   return (
     <div className="gallery-container-hero">
       <img src={loadText} alt="LoadText" className="gallery-text-load" />
-      <div className="gallery-container">
+      <div className="gallery-container" style={{ width: `${galleryWidth}px` }}>
         <Gallery photos={photos} onClick={handleImageClick} />
       </div>
     </div>

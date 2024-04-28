@@ -8,6 +8,7 @@ const GalleryComponent = () => {
   const [photos, setPhotos] = useState([]);
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
+  const [galleryWidth, setGalleryWidth] = useState(0); // state to store gallery width
 
   useEffect(() => {
     fetch(`http://localhost:8000/all-grid-designs`)
@@ -23,6 +24,18 @@ const GalleryComponent = () => {
       .catch((error) => {
         console.error("Error loading photos:", error);
       });
+
+    const handleResize = () => {
+      const maxImagesPerRow = Math.floor(window.innerWidth / 268); // calculate images per row
+      const newGalleryWidth = maxImagesPerRow * 268; // calculate new gallery width
+      const maxWidth = 1300; // Define your maximum width here
+      setGalleryWidth(Math.min(newGalleryWidth, maxWidth)); // Set the smaller of calculated or max width
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial call
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const openLightbox = useCallback((event, { photo, index }) => {
@@ -56,7 +69,7 @@ const GalleryComponent = () => {
   return (
     <div className="gallery-container-hero">
       <img src={GalleryText} alt="GalleryText" className="gallery-text" />
-      <div className="gallery-container">
+      <div className="gallery-container" style={{ width: `${galleryWidth}px` }}>
         <Gallery photos={photos} onClick={openLightbox} />
         <ModalGateway>
           {viewerIsOpen ? (
