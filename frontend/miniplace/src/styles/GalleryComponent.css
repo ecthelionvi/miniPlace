@@ -1,0 +1,41 @@
+.gallery-container-hero {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  margin: 0 auto;
+  margin-left: 19.5px;
+  padding-bottom: 50px;
+}
+
+.gallery-container img {
+  width: 256px;
+  height: auto;
+  margin: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-container img:hover {
+  opacity: 1;
+  filter: drop-shadow(5px 5px 5px #222) brightness(0.9) sepia(2) hue-rotate(0deg) saturate(5);
+}
+
+.gallery-text {
+  margin-bottom: 28px;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+}
+
+.gallery-text-load {
+  margin-bottom: 36px;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+}

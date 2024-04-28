@@ -1,0 +1,31 @@
+:root {
+  --grid-size: 1vw;
+  --grid-columns: 30;
+}
+
+#gridWrapper {
+  background-color: #fff;
+  border: 5px solid black;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#grid {
+  cursor: crosshair;
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  gap: 1px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
+#grid div {
+  box-sizing: border-box;
+  border: 1px solid #eee;
+}

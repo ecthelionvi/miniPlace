@@ -1,0 +1,211 @@
+@import "../styles/Fonts.css";
+
+#homeBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  font-family: "JetBrainsMonoNerdFont", sans-serif;
+  background: linear-gradient(
+    135deg,
+    rgba(106, 27, 154, 0.8),
+    rgba(49, 27, 146, 0.8),
+    rgba(26, 35, 126, 0.8)
+  );
+}
+
+#mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  flex-grow: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+#buttonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  margin-top: 16px;
+  margin-bottom: 12px;
+}
+
+#recButton,
+#playButton,
+#stopButton,
+#joinButton {
+  width: 42px;
+  height: auto;
+  cursor: pointer;
+  margin-right: 8px;
+  -webkit-filter: drop-shadow(2px 2px 5px #222);
+  filter: drop-shadow(2px 2px 2px #222);
+}
+
+@media (max-width: 768px) {
+  #recButton,
+  #playButton,
+  #stopButton,
+  #joinButton {
+    width: 38px;
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  #recButton,
+  #playButton,
+  #stopButton,
+  #joinButton {
+    width: 36px;
+    margin-right: 8px;
+  }
+}
+
+#gridContainer,
+.galleryContainer,
+.loadContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -40px;
+  overflow-y: hidden;
+  flex-grow: 1;
+}
+
+.galleryContainer,
+.loadContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  overflow-y: hidden;
+  flex-grow: 1;
+}
+
+#footerText {
+  padding: 10px 0;
+  height: 24px;
+  cursor: pointer;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+}
+
+#joinButton:hover,
+#playButton:hover,
+#stopButton:hover {
+  opacity: 1;
+  filter: drop-shadow(5px 5px 5px #222) brightness(0.9) sepia(2) hue-rotate(0deg) saturate(5);
+}
+
+.tooltip-button {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-button .tooltiptext-button {
+  visibility: hidden;
+  width: 80px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 6;
+  top: 105%;
+  left: 50%;
+  margin-left: -42px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 14px;
+}
+
+.tooltip-button:hover .tooltiptext-button {
+  visibility: visible;
+  opacity: 1;
+}
+
+#clickText {
+  margin: 15px 0;
+  -webkit-filter: drop-shadow(5px 5px 5px #222);
+  filter: drop-shadow(5px 5px 5px #222);
+}
+
+#navbarLogo {
+  width: 420px;
+  height: auto;
+  margin-bottom: -10px;
+  margin-right: 8px;
+}
+
+@media (max-width: 1370px) {
+  #navbarLogo {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 1293px) {
+  #navbarLogo {
+    margin-bottom: 10px;
+  }
+}
+
+#roomCodeContainer {
+  margin-left: 10px;
+  margin-bottom: 4px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  -webkit-filter: drop-shadow(2px 2px 2px #222);
+  filter: drop-shadow(2px 2px 2px #222);
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+#roomCodeContainer span {
+  margin-right: 16px;
+  font-weight: bolder;
+  font-size: 20px;
+  font-family: "JetBrainsMonoNerdFont", sans-serif;
+  animation: flashRed 3s infinite;
+}
+
+@keyframes flashRed {
+  0% {
+    color: inherit;
+  }
+  50% {
+    color: red;
+  }
+  100% {
+    color: inherit;
+  }
+}
+
+#roomCodeContainer button {
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  -webkit-filter: drop-shadow(1px 1px 1px #222);
+  filter: drop-shadow(1px 1px 1px #222);
+  font-size: 14px;
+}
+
+#roomCodeContainer button:hover {
+  opacity: 1;
+  filter: drop-shadow(1px 1px 1px #222) brightness(0.9) sepia(2) hue-rotate(0deg) saturate(5);
+}
