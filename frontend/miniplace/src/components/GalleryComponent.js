@@ -8,7 +8,7 @@ const GalleryComponent = () => {
   const [photos, setPhotos] = useState([]);
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
-  const [galleryWidth, setGalleryWidth] = useState(0); // state to store gallery width
+  const [galleryWidth, setGalleryWidth] = useState(0);
 
   useEffect(() => {
     fetch(`http://localhost:8000/all-grid-designs`)
@@ -26,14 +26,14 @@ const GalleryComponent = () => {
       });
 
     const handleResize = () => {
-      const maxImagesPerRow = Math.floor(window.innerWidth / 268); // calculate images per row
-      const newGalleryWidth = maxImagesPerRow * 268; // calculate new gallery width
-      const maxWidth = 1300; // Define your maximum width here
-      setGalleryWidth(Math.min(newGalleryWidth, maxWidth)); // Set the smaller of calculated or max width
+      const maxImagesPerRow = Math.floor(window.innerWidth / 268);
+      const newGalleryWidth = maxImagesPerRow * 268;
+      const maxWidth = 1300;
+      setGalleryWidth(Math.min(newGalleryWidth, maxWidth));
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // Initial call
+    handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);

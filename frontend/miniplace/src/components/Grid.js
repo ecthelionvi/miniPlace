@@ -4,7 +4,7 @@ import "../styles/Grid.css";
 const Grid = ({ grid, handlePixelClick }) => {
   useEffect(() => {
     const updateGridSize = () => {
-      const wrapperBorderWidth = 10; // Total for both sides (5px each)
+      const wrapperBorderWidth = 10;
       const maxWidth = Math.min(window.innerWidth - wrapperBorderWidth, 639);
       const maxHeight = Math.min(window.innerHeight - wrapperBorderWidth, 797);
       const minDimension = Math.min(maxWidth, maxHeight);
@@ -12,7 +12,7 @@ const Grid = ({ grid, handlePixelClick }) => {
       document.documentElement.style.setProperty("--grid-size", `${sizePerDiv}px`);
 
       const gridWrapper = document.getElementById("gridWrapper");
-      const totalSize = sizePerDiv * 30 + 1; // Including 1px for the gap between divs
+      const totalSize = sizePerDiv * 30 + 1;
       gridWrapper.style.width = `${totalSize}px`;
       gridWrapper.style.height = `${totalSize}px`;
     };

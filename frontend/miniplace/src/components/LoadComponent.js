@@ -5,7 +5,7 @@ import loadText from "../images/load.png";
 
 const LoadComponent = ({ userId, handleLoadGrid }) => {
   const [photos, setPhotos] = useState([]);
-  const [galleryWidth, setGalleryWidth] = useState(0); // state to store gallery width
+  const [galleryWidth, setGalleryWidth] = useState(0);
 
   useEffect(() => {
     if (userId) {
@@ -25,14 +25,14 @@ const LoadComponent = ({ userId, handleLoadGrid }) => {
         });
 
       const handleResize = () => {
-        const maxImagesPerRow = Math.floor(window.innerWidth / 268); // calculate images per row
-        const newGalleryWidth = maxImagesPerRow * 268; // calculate new gallery width
-        const maxWidth = 1300; // Define your maximum width here
-        setGalleryWidth(Math.min(newGalleryWidth, maxWidth)); // Set the smaller of calculated or max width
+        const maxImagesPerRow = Math.floor(window.innerWidth / 268);
+        const newGalleryWidth = maxImagesPerRow * 268;
+        const maxWidth = 1300;
+        setGalleryWidth(Math.min(newGalleryWidth, maxWidth));
       };
 
       window.addEventListener("resize", handleResize);
-      handleResize(); // Initial call
+      handleResize();
 
       return () => window.removeEventListener("resize", handleResize);
     }

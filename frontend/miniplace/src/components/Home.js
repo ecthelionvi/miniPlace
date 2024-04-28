@@ -19,11 +19,6 @@ import RoomCodePopup from "../components/RoomCodePopup";
 import ClipboardPopup from "../components/ClipboardPopup";
 import GalleryComponent from "../components/GalleryComponent";
 
-// import PlayButton from "../images/buttons/play.png";
-// import JoinButton from "../images/buttons/join.png";
-// import RecButton from "../images/buttons/link.png";
-// import StopButton from "../images/buttons/stop.png";
-
 const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const [grid, setGrid] = useState([]);
   const [gridId, setGridId] = useState(null);
@@ -89,10 +84,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   createGrid(30);
-  // }, []);
-
   useEffect(() => {
     if (roomCode.length > 0) {
       sessionStorage.setItem("roomCode", roomCode);
@@ -106,25 +97,14 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const newSocket = io("http://localhost:8001");
-  //   setSocket(newSocket);
-
-  //   return () => {
-  //     newSocket.disconnect();
-  //   };
-  // }, []);
-
   useEffect(() => {
     let newSocket;
     const savedRoomCode = sessionStorage.getItem("roomCode");
-    // console.log("Saved Room Code:", savedRoomCode);
 
     if (savedRoomCode) {
       newSocket = io("http://localhost:8001");
       newSocket.emit("joinRoom", savedRoomCode);
       newSocket.on("connect", () => {
-        // console.log("Reconnected to room:", savedRoomCode);
         newSocket.emit("requestGridState", savedRoomCode);
       });
       setSocket(newSocket);
@@ -157,7 +137,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       });
 
       socket.on("activeRoomCodes", (roomCodes) => {
-        // console.log("Active Room Codes:", roomCodes);
       });
 
       return () => {
@@ -269,46 +248,7 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
     setShowRoomCodePopup(true);
   };
 
-  // const handleJoinRoom = (enteredRoomCode, callback) => {
-  //   // console.log("Joining room with code:", enteredRoomCode);
-  //   setRoomCode(enteredRoomCode);
-  //   sessionStorage.setItem("roomCode", enteredRoomCode);
-
-  //   if (!socket) {
-  //     const newSocket = io("http://localhost:8001");
-  //     setSocket(newSocket);
-
-  //     newSocket.emit("checkRoomCode", enteredRoomCode, (isValid) => {
-  //       if (isValid) {
-  //         setRoomCode(enteredRoomCode);
-  //         setShowRoomCodePopup(false);
-  //         newSocket.emit("joinRoom", enteredRoomCode);
-  //         newSocket.emit("requestGridState", enteredRoomCode);
-  //         setPlayClicked(true);
-  //       } else {
-  //         console.log("Invalid room code:", enteredRoomCode);
-  //         callback(false);
-  //       }
-  //     });
-  //   } else {
-  //     socket.emit("checkRoomCode", enteredRoomCode, (isValid) => {
-  //       if (isValid) {
-  //         setRoomCode(enteredRoomCode);
-  //         setShowRoomCodePopup(false);
-  //         socket.emit("joinRoom", enteredRoomCode);
-  //         socket.emit("requestGridState", enteredRoomCode);
-  //         setPlayClicked(true);
-  //       } else {
-  //         console.log("Invalid room code:", enteredRoomCode);
-  //         callback(false);
-  //       }
-  //     });
-  //   }
-  // };
-
   const handleJoinRoom = (enteredRoomCode, callback) => {
-    // console.log("Joining room with code:", enteredRoomCode);
-
     if (!socket) {
       const newSocket = io("http://localhost:8001");
       setSocket(newSocket);
@@ -350,13 +290,11 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       if (socket) {
         socket.disconnect();
         setSocket(null);
-        // console.log("Socket disconnected");
       }
     } else {
       setPlayClicked(true);
       const newRoomCode = uuidv4().slice(0, 8);
       setRoomCode(newRoomCode);
-      // console.log("Room Code:", newRoomCode);
       const newSocket = io("http://localhost:8001");
       setSocket(newSocket);
       newSocket.emit("createRoom", newRoomCode);
@@ -371,7 +309,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
       socket.disconnect();
       setSocket(null);
       sessionStorage.removeItem("roomCode");
-      // console.log("Socket disconnected");
     } else if (playClicked === true) {
       setPlayClicked(false);
       setRoomCode("");
@@ -437,7 +374,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
   const handleColorBlockClick = (color) => {
     setCurrentColor(color);
     setActiveTool("colorBlock");
-    // console.log("Color selected:", color);
   };
 
   const handlePixelClick = (index) => {
@@ -533,7 +469,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
           })
             .then((response) => response.json())
             .then((data) => {
-              // console.log(data.message);
               if (data.gridId) {
                 setGridId(data.gridId);
               }
@@ -655,7 +590,6 @@ const Home = ({ loggedIn, handleLogout, handleLogin, userId }) => {
         <div id="buttonContainer">
           {showComponent === "grid" ? (
             <>
-              {/* {playClicked ? <img src={RecButton} alt="Record Button" id="recButton" /> : null} */}
               <div className="tooltip-button">
                 <img src={PlayButton} alt="Play Button" id="playButton" onClick={handlePlayClick} />
                 <span className="tooltiptext-button">Play</span>

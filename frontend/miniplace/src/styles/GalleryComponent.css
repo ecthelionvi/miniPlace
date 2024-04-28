@@ -5,23 +5,12 @@
   justify-content: flex-start;
 }
 
-/* .gallery-container { */
-/*   display: flex; */
-/*   flex-wrap: wrap; */
-/*   justify-content: center; */
-/*   align-items: flex-start; */
-/*   width: 100%; */
-/*   max-width: 80vw; */
-/*   margin: 0 auto; */
-/*   padding-bottom: 50px; */
-/* } */
-
 .gallery-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  width: 100%; /* Dynamically adjusted by JS */
+  width: 100%;
   margin: 0 auto;
   margin-left: 19.5px;
   padding-bottom: 50px;
