@@ -3,6 +3,7 @@ import os
 import signal
 import psutil
 import sys
+from halo import Halo
 
 os.environ["NODE_ENV"] = "production"
 
@@ -50,11 +51,20 @@ def stop_processes():
 signal.signal(signal.SIGINT, handle_keyboard_interrupt)
 
 os.chdir(backend_dir)
-subprocess.run(backend_command, check=True)
+subprocess.run(
+    backend_command, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+)
 
 os.chdir(os.path.join("..", "..", frontend_dir))
-subprocess.run(build_command, check=True)
+subprocess.run(
+    build_command, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+)
 
-subprocess.Popen(serve_command)
+clear_screen()
+
+spinner = Halo(text="Server Running: http://localhost:3000", spinner="dots")
+spinner.start()
+
+subprocess.Popen(serve_command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 signal.pause()
