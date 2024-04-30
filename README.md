@@ -6,7 +6,9 @@
 <img src="https://raw.githubusercontent.com/ecthelionvi/Images/main/miniplace.png" alt="Miniplace" width="750" height="400">
 </p>
 
+<p align="center">
 Welcome to Miniplace, the ultimate collaborative grid-based design app that lets you create, save, and share your pixel art masterpieces with friends in real-time! 🎉🚀 Unleash your inner artist on the flexible and intuitive grid canvas, where you can let your creativity run wild. 🎨🌈 Collaborate with friends in a virtual art studio, working together to transform the grid into a work of art. 👩‍🎨👨‍🎨 Experiment freely with the undo and redo features, save your designs securely, explore the gallery for inspiration, export your creations as PNG images, and share your pixel prowess directly on Twitter! 📸🐦
+</p>
 
 ## 🛠️ Tech Stack
 
