@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/ecthelionvi/Images/main/miniplace.png" alt="Miniplace" width="750" height="400">
+<img src="https://raw.githubusercontent.com/ecthelionvi/Images/main/miniplace.png" alt="Miniplace" width="700" height="400">
 </p>
 
 <p align="center">
