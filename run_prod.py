@@ -3,6 +3,7 @@ import os
 import signal
 import psutil
 import sys
+import webbrowser
 from halo import Halo
 
 os.environ["NODE_ENV"] = "production"
@@ -66,5 +67,8 @@ spinner = Halo(text="Server Running: http://localhost:3000", spinner="dots")
 spinner.start()
 
 subprocess.Popen(serve_command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+# Open the default web browser to the localhost server
+webbrowser.open("http://localhost:3000")
 
 signal.pause()
