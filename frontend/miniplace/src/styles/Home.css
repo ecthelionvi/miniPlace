@@ -93,6 +93,7 @@
 #footerText {
   padding: 10px 0;
   height: 24px;
+  margin-top: 10px;
   cursor: pointer;
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(5px 5px 5px #222);
